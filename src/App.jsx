@@ -1,6 +1,24 @@
-export default function App() {
-  return (
-    <div className="bg-background text-foreground min-h-screen">
+import { Navbar } from "@/layout/Navbar.jsx";
+import {Hero} from "@/sections/Hero";
+import {About} from "@/sections/About";
+import {Projects} from "@/sections/Projects";
+import {Experience} from "@/sections/Experience";
+import {Contact} from "@/sections/Contact";
+
+
+function App() {                                
+  return(
+    <div className="min-h-screen overflow-x-hidden">
+     <Navbar/>
+        <main>
+          <Hero />
+          <About />
+          <Projects/>
+          <Experience />
+          <Contact /> 
+      </main>
     </div>
   );
 }
+
+export default App
