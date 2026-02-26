@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: #020617;
+  --color-foreground: #f8fafc;
+
+  --color-card: #0f172a;
+
+  --color-primary: #3b82f6;
+  --color-primary-foreground: #ffffff;
+
+  --color-secondary: #6366f1;
+  --color-secondary-foreground: #ffffff;
+
+  --color-muted: #334155;
+  --color-muted-foreground: #94a3b8;
+
+  --color-border: #1e293b;
+
+  --radius: 0.75rem;
+
+  --color-highlight: #60a5fa;
+  --color-surface: #111827;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: "Inter", sans-serif;
+  }
+
+  .font-serif {
+    font-family: "Playfair Display", serif;
+  }
+}
+
+@layer components {
+  .glass {
+    background-color: color-mix(in srgb, var(--color-surface) 50%, transparent);
+    backdrop-filter: blur(16px);
+    border: 1px solid color-mix (in srgb, var(--color-border) 50%, transparent);
+  }
+}
