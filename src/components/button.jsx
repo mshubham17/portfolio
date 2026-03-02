@@ -9,11 +9,10 @@ export const Button = ({ className, size, children }) => {
   };
   const classes = `${baseClasses} ${sizeClasses[size]} ${className}`;
   return (
-    <button className="px-5 py-2 rounded-full bg-blue-500 text-white">
+    <button className={classes}>
       <span className="relative flex items-center justify-center gap-2">
         {children}
       </span>
     </button>
   );
 };
- 
