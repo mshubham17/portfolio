@@ -1,14 +1,4 @@
-import {
-  Code2,
-  Headphones,
-  Lightbulb,
-  MoveIcon,
-  Rocket,
-  Theater,
-  TheaterIcon,
-  Tv,
-  Users,
-} from "lucide-react";
+import { Headphones, Tv } from "lucide-react";
 import { useState } from "react";
 const highlights = [
   {
@@ -109,16 +99,28 @@ export const About = () => {
             {highlights.map((item, idx) => (
               <div
                 key={idx}
-                className="glass p-6 rounded-2xl animate-fade-in"
+                className="relative glass p-6 rounded-2xl animate-fade-in overflow-hidden"
                 style={{ animationDelay: `${(idx + 1) * 100}ms` }}
               >
-                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 hover:bg-primary/20">
-                  <item.icon className="w-6 h-6 text-primary" />
+                {/* Blurred Content */}
+                <div className="blur-md opacity-50 pointer-events-none select-none">
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
+                    <item.icon className="w-6 h-6 text-primary" />
+                  </div>
+
+                  <h3 className="text-lg font-semibold mb-2">{item.title}</h3>
+
+                  <p className="text-sm text-muted-foreground">
+                    {item.description}
+                  </p>
                 </div>
-                <h3 className="text-lg font-semibold mb-2">{item.title}</h3>
-                <p className="text-sm text-muted-foreground">
-                  {item.description}
-                </p>
+
+                {/* Overlay */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <span className="px-4 py-2 rounded-full glass text-sm font-medium text-primary">
+                    Updating Soon
+                  </span>
+                </div>
               </div>
             ))}
           </div>

@@ -53,12 +53,22 @@
   }
 
   .glow-border {
-    box-shadow: 0 0 20px rgba(32, 178, 166, 0.2), inset 0 0 20px rgba(32, 178, 166, 0.1);
+    box-shadow:
+      0 0 20px rgba(32, 178, 166, 0.2),
+      inset 0 0 20px rgba(32, 178, 166, 0.1);
     border: 1px solid rgba(32, 178, 166, 0.3);
   }
 }
 
 @layer utilities {
+  @keyframes marquee {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
   @keyframes fade-in {
     from {
       opacity: 0;
@@ -74,7 +84,6 @@
   }
 
   @keyframes slow-drift {
-
     0%,
     100% {
       transform: translate(0, 0);

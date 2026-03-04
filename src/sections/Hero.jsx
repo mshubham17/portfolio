@@ -93,8 +93,11 @@ export const Hero = () => {
             <div className="flex items-center gap-4 animate-fade-in animation-delay-400">
               <span className="text-sm text-muted-foreground">Follow me: </span>
               {[
-                { icon: Github, href: "https://github.com/mehtashubham172" },
-                { icon: Linkedin, href: "#" },
+                { icon: Github, href: "https://github.com/mshubham17" },
+                {
+                  icon: Linkedin,
+                  href: "https://www.linkedin.com/in/shubham172",
+                },
               ].map((social, idx) => (
                 <a
                   target="_blank"
@@ -120,7 +123,7 @@ export const Hero = () => {
               />
               <div className="relative glass rounded-3xl p-2 glow-border">
                 <img
-                  src="/profile-photo.jpg"
+                  src="/profilephoto.jpeg"
                   alt="Shubham  Mehta"
                   className="w-full aspect-4/5 object-cover rounded-2xl"
                 />
