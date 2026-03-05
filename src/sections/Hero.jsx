@@ -21,7 +21,10 @@ const skills = [
 
 export const Hero = () => {
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden">
+    <section
+      id="top"
+      className="relative min-h-screen flex items-center overflow-hidden"
+    >
       {/* Bg */}
       <div className="absolute inset-0 -z-10 ">
         <img
@@ -80,10 +83,12 @@ export const Hero = () => {
 
             {/* CTAs */}
             <div className="flex flex-wrap gap-4 animate-fade-in animation-delay-300">
-              <Button size="lg">
-                Get in touch <ArrowRight className="w-5 h-5" />
-              </Button>
-              <AnimatedBorderButton>
+              <a href="#contact" className="cursor-pointer">
+                <Button size="lg">
+                  Get in touch <ArrowRight className="w-5 h-5" />
+                </Button>
+              </a>
+              <AnimatedBorderButton className="cursor-pointer">
                 <Download className="w-5 h-5" />
                 Download CV
               </AnimatedBorderButton>

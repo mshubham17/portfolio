@@ -3,9 +3,9 @@ import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const navLinks = [
-  { href: "#About", label: "About" },
-  { href: "#Projects", label: "Projects" },
-  { href: "#Experience", label: "Experience" },
+  { href: "#about", label: "About" },
+  { href: "#projects", label: "Projects" },
+  { href: "#experience", label: "Experience" },
 ];
 
 export const Navbar = () => {
@@ -52,7 +52,10 @@ export const Navbar = () => {
 
         {/* {Contact BUTTON} */}
         <div className="hidden md:block">
-          <Button size="sm">Contact Me</Button>
+          <a href="#contact"></a>
+          <Button size="sm" className="cursor-pointer">
+            Contact Me
+          </Button>
         </div>
 
         {/* {Mobile menu buttton} */}
@@ -77,7 +80,12 @@ export const Navbar = () => {
                 {link.label}
               </a>
             ))}
-            <Button onClick={() => setIsMobileMenuOpen(false)}>
+            <Button
+              onClick={() => {
+                setIsMobileMenuOpen(false);
+                window.location.href = "#contact";
+              }}
+            >
               Contact Me
             </Button>
           </div>

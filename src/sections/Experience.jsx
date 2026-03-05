@@ -1,12 +1,13 @@
 const experience = [
   {
-    period: "2022 — Present",
-    role: "Senior Frontend Engineer",
-    company: "Tech Innovators Inc.",
+    period: "Jan 2026 — Feb 2026",
+    role: "Freelance Web Developer ",
+    company: "Self Employed",
     description: [
-      "Leading frontend architecture for a suite of fintech products. Implemented micro-frontend architecture, reduced bundle size by 40%, and mentored a team of 5 developers.",
+      "Completed 2–6 small freelance web development gigs for clients, building simple and responsive websites.",
+      "Worked with HTML, CSS, JavaScript, and basic React to develop landing pages and small web projects.",
     ],
-    technologies: ["React", "TypeScript", "Next.js", "GraphQL"],
+    technologies: ["React", "JavaScript", "Python"],
     current: true,
   },
   {
@@ -17,7 +18,7 @@ const experience = [
       "Developed a web application that allows engineers to configure and visualize telecom tower structures in real time through an interactive 3D interface.",
       "Designed a structured, multi-step workflow that simplified complex engineering inputs and improved usability for configuration tasks.",
     ],
-    technologies: ["React", "Node.js", "MongoDB", "AWS"],
+    technologies: ["React", "Node.js", "Three.JS"],
     current: false,
   },
   {
@@ -42,7 +43,7 @@ export const Experience = () => {
 
       <div className="container mx-auto px-6 relative z-10">
         {/* Section Header */}
-        <div className="max-w-3xl mb-16">
+        <div className=" text-center mx-auto max-w-3xl mb-16 ">
           <h2>
             {" "}
             <span
