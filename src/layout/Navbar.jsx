@@ -52,10 +52,11 @@ export const Navbar = () => {
 
         {/* {Contact BUTTON} */}
         <div className="hidden md:block">
-          <a href="#contact"></a>
-          <Button size="sm" className="cursor-pointer">
-            Contact Me
-          </Button>
+          <a href="#contact">
+            <Button size="sm" className="cursor-pointer">
+              Contact Me
+            </Button>
+          </a>
         </div>
 
         {/* {Mobile menu buttton} */}

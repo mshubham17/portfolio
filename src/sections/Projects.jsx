@@ -52,6 +52,10 @@ export const Projects = () => {
             {" "}
             Featured Work
           </span>
+          <p className="text-muted-foreground animate-fade-in animation-delay-200">
+            Here are some of my recent projects. Click on the links to view the
+            code or live demo.
+          </p>
         </div>
 
         {/* Projects Grid */}
