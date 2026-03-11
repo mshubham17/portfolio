@@ -23,7 +23,7 @@ const quotes = [
   },
   {
     text: "We are what we repeatedly do. Excellence, then, is not an act, but a habit.",
-    author: "Commonly attributed to Aristotle",
+    author: "Aristotle",
   },
   {
     text: "The man who moves a mountain begins by carrying away small stones.",
