@@ -19,11 +19,7 @@ function SpotifyNowPlaying() {
   }, []);
 
   if (!song) {
-    return (
-      <div className="glass p-6 rounded-2xl">
-        Loading Spotify...
-      </div>
-    );
+    return <div className="glass p-6 rounded-2xl">Loading Spotify...</div>;
   }
 
   return (
@@ -31,29 +27,29 @@ function SpotifyNowPlaying() {
       href={song.songUrl}
       target="_blank"
       rel="noreferrer"
-      className="glass p-6 rounded-2xl block hover:-translate-y-1 transition-all duration-300"
+      className="glass p-6 rounded-2xl block hover:-translate-y-1 transition-all duration-300 h-full"
     >
-      <div className="flex items-center gap-4">
-        <img
-          src={song.albumImageUrl}
-          alt="album"
-          className="w-16 h-16 rounded-xl"
-        />
+      <div className="flex flex-col gap-4">
+        <div className="flex items-center gap-4">
+          <img
+            src={song.albumImageUrl}
+            alt="album"
+            className="w-16 h-16 rounded-xl object-cover shrink-0"
+          />
 
-        <div>
-          <p className="text-sm text-green-400 mb-1">
-            {song.isPlaying
-              ? "Currently Vibing To 🎵"
-              : "Last Played"}
-          </p>
+          <div className="min-w-0">
+            <p className="text-sm text-green-400 mb-1">
+              {song.isPlaying ? "Currently Vibing To 🎵" : "Last Played"}
+            </p>
 
-          <h3 className="font-semibold text-white">
-            {song.title}
-          </h3>
+            <h3 className="font-semibold text-white leading-tight break-words">
+              {song.title}
+            </h3>
 
-          <p className="text-sm text-muted-foreground">
-            {song.artist}
-          </p>
+            <p className="text-sm text-muted-foreground break-words">
+              {song.artist}
+            </p>
+          </div>
         </div>
       </div>
     </a>

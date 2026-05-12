@@ -1,4 +1,4 @@
-import { Headphones, Tv } from "lucide-react";
+import { Tv } from "lucide-react";
 import { useState } from "react";
 import SpotifyNowPlaying from "../components/SpotifyNowPlaying";
 const quotes = [
@@ -84,32 +84,24 @@ export const About = () => {
           </div>
 
           {/* Right Column - Highlights */}
-          <div className="grid sm:grid-cols-2 gap-6">
-            <div className="grid sm:grid-cols-2 gap-6">
-              {/* Spotify Card */}
-              <SpotifyNowPlaying />
+          <div className="grid md:grid-cols-2 gap-6 items-stretch">
+            {/* Spotify Card */}
+            <SpotifyNowPlaying />
 
-              {/* Second Card */}
-              <div className="relative glass p-6 rounded-2xl animate-fade-in overflow-hidden">
-                {/* Blurred Content */}
-                <div className="blur-md opacity-50 pointer-events-none select-none">
-                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
-                    <Tv className="w-6 h-6 text-primary" />
-                  </div>
-
-                  <h3 className="text-lg font-semibold mb-2">Last watched</h3>
-
-                  <p className="text-sm text-muted-foreground">
-                    One Battle After Another
-                  </p>
+            {/* Second Card */}
+            <div className="relative glass p-6 rounded-2xl animate-fade-in overflow-hidden">
+              {/* Blurred Content */}
+              <div className="blur-md opacity-50 pointer-events-none select-none">
+                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
+                  <Tv className="w-6 h-6 text-primary" />
                 </div>
+              </div>
 
-                {/* Overlay */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="px-4 py-2 rounded-full glass text-sm font-medium text-primary">
-                    Updating Soon
-                  </span>
-                </div>
+              {/* Overlay */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <span className="px-4 py-2 rounded-full glass text-sm font-medium text-primary">
+                  Updating Soon
+                </span>
               </div>
             </div>
           </div>
