@@ -1,17 +1,6 @@
 import { Headphones, Tv } from "lucide-react";
 import { useState } from "react";
-const highlights = [
-  {
-    icon: Headphones,
-    title: "Last played",
-    description: "Blinding Lights — The Weeknd",
-  },
-  {
-    icon: Tv,
-    title: "Last watched",
-    description: "One Battle After Another",
-  },
-];
+import SpotifyNowPlaying from "../components/SpotifyNowPlaying";
 const quotes = [
   {
     text: "Hard work beats talent when talent doesn't work hard.",
@@ -96,22 +85,22 @@ export const About = () => {
 
           {/* Right Column - Highlights */}
           <div className="grid sm:grid-cols-2 gap-6">
-            {highlights.map((item, idx) => (
-              <div
-                key={idx}
-                className="relative glass p-6 rounded-2xl animate-fade-in overflow-hidden"
-                style={{ animationDelay: `${(idx + 1) * 100}ms` }}
-              >
+            <div className="grid sm:grid-cols-2 gap-6">
+              {/* Spotify Card */}
+              <SpotifyNowPlaying />
+
+              {/* Second Card */}
+              <div className="relative glass p-6 rounded-2xl animate-fade-in overflow-hidden">
                 {/* Blurred Content */}
                 <div className="blur-md opacity-50 pointer-events-none select-none">
                   <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
-                    <item.icon className="w-6 h-6 text-primary" />
+                    <Tv className="w-6 h-6 text-primary" />
                   </div>
 
-                  <h3 className="text-lg font-semibold mb-2">{item.title}</h3>
+                  <h3 className="text-lg font-semibold mb-2">Last watched</h3>
 
                   <p className="text-sm text-muted-foreground">
-                    {item.description}
+                    One Battle After Another
                   </p>
                 </div>
 
@@ -122,7 +111,7 @@ export const About = () => {
                   </span>
                 </div>
               </div>
-            ))}
+            </div>
           </div>
         </div>
       </div>
