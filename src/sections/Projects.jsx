@@ -22,6 +22,13 @@ export const Projects = () => {
       link: "https://drowning-detection-vh9z95a68jhonohxhb59ce.streamlit.app/#try-with-a-demo-video",
       github: "https://github.com/mshubham17/Emotion-detector.git",
     },
+      {
+      title: "Next Project",
+      description: "Currently working on something exciting.",
+      image: "/projects/project4.png",
+      tags: [""],
+      inProgress: true,
+    },
     {
       title: "Personal Portfolio",
       description: "My developer portfolio built with React and Tailwind.",
@@ -30,13 +37,7 @@ export const Projects = () => {
       link: "#",
       github: "https://github.com/mshubham17/portfolio",
     },
-    {
-      title: "Next Project",
-      description: "Currently working on something exciting.",
-      image: "/projects/project4.png",
-      tags: [""],
-      inProgress: true,
-    },
+  
     {
       title: "Soil Sentry (Arduino-Based Soil Moisture Monitoring Device)",
       description:
