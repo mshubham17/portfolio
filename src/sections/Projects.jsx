@@ -22,11 +22,13 @@ export const Projects = () => {
       link: "https://drowning-detection-vh9z95a68jhonohxhb59ce.streamlit.app/#try-with-a-demo-video",
       github: "https://github.com/mshubham17/Emotion-detector.git",
     },
-      {
-      title: "Next Project",
-      description: "Currently working on something exciting.",
-      image: "/projects/project4.png",
-      tags: [""],
+    {
+      title: "MediBot",
+      description:
+        "A RAG-powered medical assistant that retrieves relevant medical information from a medical knowledge base and generates context-aware answers using Large Language Models.",
+      image: "/Project5.png",
+      tags: ["Python", "Langchain", "HuggingFace Embeddings", "Groq API"],
+      github: "https://github.com/mshubham17/MediBot.git",
       inProgress: true,
     },
     {
@@ -37,7 +39,7 @@ export const Projects = () => {
       link: "#",
       github: "https://github.com/mshubham17/portfolio",
     },
-  
+
     {
       title: "Soil Sentry (Arduino-Based Soil Moisture Monitoring Device)",
       description:
