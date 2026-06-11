@@ -34,6 +34,18 @@ const quotes = [
     text: "The price of greatness is responsibility.",
     author: "Winston Churchill",
   },
+  {
+    text: "Discipline equals freedom.",
+    author: "Jocko Willink",
+  },
+  {
+    text: "It’s not that I’m so smart, it’s just that I stay with problems longer.",
+    author: "Albert Einstein",
+  },
+  {
+    text: "Whether you think you can or think you can’t, you’re right.",
+    author: "Henry Ford",
+  },
 ];
 
 export const About = () => {

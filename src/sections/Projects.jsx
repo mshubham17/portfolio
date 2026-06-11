@@ -7,6 +7,22 @@ export const Projects = () => {
 
   const projects = [
     {
+      title: "Drowning Detection",
+      description:
+        "Developed and deployed an AI-powered drowning detection system. The application analyzes swimming videos, detects potential drowning incidents, and generates a risk score through an interactive web interface.",
+      image: "/Project4.png",
+      tags: [
+        "Python",
+        "PyTorch",
+        "OpenCV",
+        "Streamlit",
+        "CVLib",
+        "Computer Vision",
+      ],
+      link: "https://drowning-detection-vh9z95a68jhonohxhb59ce.streamlit.app/#try-with-a-demo-video",
+      github: "https://github.com/mshubham17/Emotion-detector.git",
+    },
+    {
       title: "Personal Portfolio",
       description: "My developer portfolio built with React and Tailwind.",
       image: "/Project1.png",

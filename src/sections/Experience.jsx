@@ -1,5 +1,16 @@
 const experience = [
   {
+    period: "April 2026 - Present",
+    role: "Operations Intern ",
+    company: "Aetos Digilog",
+    description: [
+      "Developed and maintained Power BI dashboards to track warehouse KPIs, inventory movement, and operational performance, enabling data-driven decision making for management.",
+      "Analyzed WMS data and warehouse processes utilizing SQL and Advanced Excel to identify operational bottlenecks, support inventory accuracy initiatives, and improve workflow efficiency.",
+    ],
+    technologies: ["Power BI", "Advanced Excel", "SQL", "WMS(Warehouse Management System)"],
+    current: true,
+  },
+  {
     period: "Jan 2026 — Feb 2026",
     role: "Freelance Web Developer ",
     company: "Self Employed",
