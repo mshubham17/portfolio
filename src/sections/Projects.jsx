@@ -23,13 +23,13 @@ export const Projects = () => {
       github: "https://github.com/mshubham17/Emotion-detector.git",
     },
     {
-      title: "MediBot",
+      title: "ISS Tracker",
       description:
-        "A RAG-powered medical assistant that retrieves relevant medical information from a medical knowledge base and generates context-aware answers using Large Language Models.",
-      image: "/Project5.png",
-      tags: ["Python", "Langchain", "HuggingFace Embeddings", "Groq API"],
-      github: "https://github.com/mshubham17/MediBot.git",
-      inProgress: true,
+        "An interactive 3D visualization of the International Space Station, tracking its real-time position as it orbits Earth. Built for fun, curiosity, and an appreciation of one of humanity's greatest engineering achievements.",
+      image: "/Project6.png",
+      tags: ["JavaScript", "Vite", "3D visualization", "APIs"],
+      link: "https://iss-tracker-tan.vercel.app",
+      github: "https://github.com/mshubham17/Iss-Tracker",
     },
     {
       title: "Personal Portfolio",
@@ -151,6 +151,31 @@ export const Projects = () => {
                     </span>
                   ))}
                 </div>
+
+                {!project.inProgress && (project.link || project.github) && (
+                  <div className="flex flex-wrap gap-4 pt-1 text-sm">
+                    {project.link && project.link !== "#" && (
+                      <a
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        href={project.link}
+                        className="inline-flex items-center gap-1 text-muted-foreground hover:text-primary transition-colors"
+                      >
+                        Live Demo <ArrowUpRight className="w-4 h-4" />
+                      </a>
+                    )}
+                    {project.github && (
+                      <a
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        href={project.github}
+                        className="inline-flex items-center gap-1 text-muted-foreground hover:text-primary transition-colors"
+                      >
+                        Source Code <Github className="w-4 h-4" />
+                      </a>
+                    )}
+                  </div>
+                )}
               </div>
 
               {/* Badge */}
