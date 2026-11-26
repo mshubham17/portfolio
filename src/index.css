@@ -1,77 +1,40 @@
-@import "@fontsource-variable/sora";
+@import "@fontsource-variable/playfair-display";
 @import "@fontsource-variable/hanken-grotesk";
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --bg: #fafaf8; --ink: #141414; --mute: #6a6a64; --line: #e6e6e1; --card: #ffffff; --accent: #3b4cca;
+  --bh-w: #8a8a8a;
+  color-scheme: light;
+}
+.dark {
+  --bg: #151412; --ink: #ece8e0; --mute: #9a958b; --line: #2b2925; --card: #1b1a17; --accent: #aab5ff;
+  --bh-w: #ffffff;
+  color-scheme: dark;
+}
+
 @theme {
-  --font-display: "Sora Variable", system-ui, sans-serif;
+  --font-display: "Playfair Display Variable", Georgia, serif;
   --font-sans: "Hanken Grotesk Variable", system-ui, sans-serif;
-  --color-base: #0d0f13;
-  --color-tile: #161a20;
-  --color-line: #262c36;
-  --color-ink: #f2f4f8;
-  --color-muted: #9aa3b2;
-  --color-electric: #3d5afe;
-  --color-paper: #e8ebf3;
+  --color-bg: var(--bg);
+  --color-ink: var(--ink);
+  --color-mute: var(--mute);
+  --color-line: var(--line);
+  --color-card: var(--card);
+  --color-accent: var(--accent);
 }
 
 @layer base {
-  html { scroll-behavior: smooth; scroll-padding-top: 5.5rem; }
-  body {
-    background: var(--color-base);
-    color: var(--color-ink);
-    font-family: var(--font-sans);
-    overflow-x: hidden;
-  }
-  @media (min-width: 768px) { #root { padding-right: 2rem; } }
-  :focus-visible { outline: 2px solid #9db0ff; outline-offset: 3px; border-radius: 6px; }
+  body { background: var(--bg); color: var(--ink); font-family: var(--font-sans); overflow-x: hidden; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
   button { cursor: pointer; }
 }
 
-.tile {
-  background: var(--color-tile);
-  border: 1px solid var(--color-line);
-  border-radius: 1.5rem;
-  padding: 1.5rem;
-  min-width: 0;
-  animation: tile-in .6s ease-out both;
-  animation-delay: calc(var(--i, 0) * 70ms);
-}
-@media (min-width: 768px) { .tile { padding: 2rem; } }
-.tile-blue { background: var(--color-electric); border-color: transparent; color: #fff; position: relative; overflow: hidden; }
-.tile-paper { background: var(--color-paper); border-color: transparent; color: #12151b; }
-.tile-paper .muted { color: #475066; }
-.chip { display: inline-block; font-size: .75rem; padding: .25rem .625rem; border-radius: 999px; border: 1px solid var(--color-line); color: var(--color-muted); }
-.tile-paper .chip { border-color: #b9c0d2; color: #2f3748; }
-
-@keyframes tile-in { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
-
-/* hero stars: very low contrast */
-.stars {
-  position: absolute; inset: 0; pointer-events: none; opacity: .5;
-  background-image:
-    radial-gradient(1px 1px at 12% 20%, rgba(255,255,255,.35), transparent),
-    radial-gradient(1px 1px at 78% 12%, rgba(255,255,255,.3), transparent),
-    radial-gradient(1.5px 1.5px at 90% 60%, rgba(255,255,255,.25), transparent),
-    radial-gradient(1px 1px at 45% 85%, rgba(255,255,255,.3), transparent),
-    radial-gradient(1px 1px at 30% 55%, rgba(255,255,255,.2), transparent),
-    radial-gradient(1px 1px at 65% 40%, rgba(255,255,255,.25), transparent);
-}
-
-/* radar */
-.radar { position: relative; width: 84px; height: 84px; border-radius: 50%; border: 1px solid var(--color-line); flex: none;
-  background: radial-gradient(circle, transparent 38%, var(--color-line) 39%, transparent 41%, transparent 68%, var(--color-line) 69%, transparent 71%), #11151a; overflow: hidden; }
-.radar::before { content: ""; position: absolute; inset: 0; border-radius: 50%;
-  background: conic-gradient(from 0deg, rgba(61,220,151,.45), transparent 70deg, transparent);
-  animation: sweep 4s linear infinite; }
-.radar i { position: absolute; left: 66%; top: 28%; width: 6px; height: 6px; border-radius: 50%; background: #3ddc97; animation: blip 2s ease-in-out infinite; }
-@keyframes sweep { to { transform: rotate(360deg); } }
-@keyframes blip { 0%,100% { opacity: .2; } 50% { opacity: 1; } }
-
-.plane { position: fixed; top: 30vh; left: -80px; z-index: 60; color: #fff; pointer-events: none; animation: fly 3.2s ease-in forwards; }
-@keyframes fly { to { transform: translate(calc(100vw + 160px), -18vh); } }
-
+@keyframes breathe { 0%, 100% { opacity: .55; } 50% { opacity: 1; } }
+.breathe { animation: breathe 9s ease-in-out infinite; will-change: opacity; }
 @media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  *, *::before, *::after { animation: none !important; transition: none !important; }
-  .radar i { opacity: 1; }
+  .breathe { animation: none; }
+  *, *::before, *::after { transition-duration: 0s !important; scroll-behavior: auto !important; }
 }
