@@ -89,7 +89,6 @@ export const PROJECTS = [
     title: "Drowning Detection",
     image: "/projects/drowning.jpg",
     blurb: "IoT and computer vision safety system that analyzes swimming videos and generates a risk score.",
-    flow: "Video → Frames → Detect → Risk score → Web app",
     tags: ["Python", "PyTorch", "OpenCV", "Streamlit", "CVLib"],
     code: "https://github.com/mshubham17/Emotion-detector.git", // TODO: confirm this is the right repo
     live: "https://drowning-detection-vh9z95a68jhonohxhb59ce.streamlit.app/#try-with-a-demo-video",
