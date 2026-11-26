@@ -37,8 +37,8 @@ function Header({ openPalette }) {
           Shubham <span className="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden="true" />
         </a>
         <nav aria-label="Primary" className="flex items-center gap-4 text-sm">
-          <a href="#work" onClick={(e) => { e.preventDefault(); scrollToId("work"); }} className={`hidden sm:inline ${linkCls}`}>Work</a>
           <a href="#projects" onClick={(e) => { e.preventDefault(); scrollToId("projects"); }} className={`hidden sm:inline ${linkCls}`}>Projects</a>
+          <a href="#work" onClick={(e) => { e.preventDefault(); scrollToId("work"); }} className={`hidden sm:inline ${linkCls}`}>Work</a>
           <a href="#contact" onClick={(e) => { e.preventDefault(); scrollToId("contact"); }} className={`hidden sm:inline ${linkCls}`}>Contact</a>
           <button type="button" onClick={openPalette} aria-label="Open command palette" className="hidden rounded-md border border-line px-2 py-1 text-xs text-mute hover:text-ink sm:inline">Ctrl K</button>
           <button type="button" onClick={openPalette} aria-label="Open menu" className={`p-1.5 sm:hidden ${linkCls}`}>{icons.menu}</button>
@@ -77,6 +77,7 @@ function Contact() {
 
 export default function App() {
   const [paletteOpen, setPaletteOpen] = useState(false);
+  const [quote] = useState(() => ABOUT.quotes[Math.floor(Math.random() * ABOUT.quotes.length)]);
 
   useEffect(() => {
     const onKey = (e) => {
@@ -88,8 +89,8 @@ export default function App() {
 
   const commands = useMemo(() => [
     { label: "About", run: () => scrollToId("about") },
-    { label: "Work experience", run: () => scrollToId("work") },
     { label: "Projects", run: () => scrollToId("projects") },
+    { label: "Work experience", run: () => scrollToId("work") },
     { label: "Contact", run: () => scrollToId("contact") },
     { label: "Download CV", run: () => { const a = document.createElement("a"); a.href = PROFILE.cv; a.download = ""; a.click(); } },
     { label: "GitHub", run: () => window.open(PROFILE.github, "_blank", "noopener") },
@@ -127,29 +128,10 @@ export default function App() {
             <H2 id="about-h">{ABOUT.heading}</H2>
             <div className="space-y-4 text-mute">{ABOUT.paragraphs.map((p) => <p key={p}>{p}</p>)}</div>
             <blockquote className="my-8 border-l-2 border-accent pl-4">
-              <p className="italic">“{ABOUT.quote}”</p>
-              <footer className="mt-1 text-sm text-mute">{ABOUT.quoteBy}</footer>
+              <p className="italic">“{quote.text}”</p>
+              <footer className="mt-1 text-sm text-mute">{quote.by}</footer>
             </blockquote>
             <p className="text-sm text-mute"><span className="text-ink">Technologies I work with:</span> {ABOUT.tech.join(", ")}</p>
-          </section>
-
-          <section id="work" aria-labelledby="work-h" className="scroll-mt-20 py-10">
-            <H2 id="work-h">Work experience</H2>
-            <div className="divide-y divide-line rounded-xl border border-line bg-bg/80 px-4 backdrop-blur-md">
-              {EXPERIENCE.map((e) => (
-                <details key={e.company} className="group py-4">
-                  <summary className="flex cursor-pointer list-none items-center gap-3 [&::-webkit-details-marker]:hidden">
-                    <span className="text-mute transition-transform group-open:rotate-90">{icons.chevron}</span>
-                    <span className="min-w-0 flex-1">
-                      <span className="block font-medium">{e.company}{e.current && <span className="ml-2 rounded-full border border-line px-2 py-0.5 align-middle text-[10px] font-normal text-mute">Working</span>}</span>
-                      <span className="block text-sm text-ink/70">{e.role}</span>
-                    </span>
-                    <span className="shrink-0 text-xs text-mute">{e.period}</span>
-                  </summary>
-                  <ul className="mt-3 list-disc space-y-2 pl-8 text-sm text-ink/80">{e.points.map((p) => <li key={p}>{p}</li>)}</ul>
-                </details>
-              ))}
-            </div>
           </section>
 
           <section id="projects" aria-labelledby="proj-h" className="scroll-mt-20 py-10">
@@ -174,6 +156,25 @@ export default function App() {
                 </article>
               ))}
               <p className="text-mute/80">More coming soon</p>
+            </div>
+          </section>
+
+          <section id="work" aria-labelledby="work-h" className="scroll-mt-20 py-10">
+            <H2 id="work-h">Work experience</H2>
+            <div className="divide-y divide-line rounded-xl border border-line bg-bg/80 px-4 backdrop-blur-md">
+              {EXPERIENCE.map((e) => (
+                <details key={e.company} className="group py-4">
+                  <summary className="flex cursor-pointer list-none items-center gap-3 [&::-webkit-details-marker]:hidden">
+                    <span className="text-mute transition-transform group-open:rotate-90">{icons.chevron}</span>
+                    <span className="min-w-0 flex-1">
+                      <span className="block font-medium">{e.company}{e.current && <span className="ml-2 rounded-full border border-line px-2 py-0.5 align-middle text-[10px] font-normal text-mute">Working</span>}</span>
+                      <span className="block text-sm text-ink/70">{e.role}</span>
+                    </span>
+                    <span className="shrink-0 text-xs text-mute">{e.period}</span>
+                  </summary>
+                  <ul className="mt-3 list-disc space-y-2 pl-8 text-sm text-ink/80">{e.points.map((p) => <li key={p}>{p}</li>)}</ul>
+                </details>
+              ))}
             </div>
           </section>
 
