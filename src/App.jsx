@@ -36,11 +36,11 @@ function Header({ openPalette }) {
         <a href="#top" onClick={(e) => { e.preventDefault(); toTop(); }} className="flex items-center gap-2 font-medium">
           Shubham <span className="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden="true" />
         </a>
-        <nav aria-label="Primary" className="flex items-center gap-4 text-sm">
+        <nav aria-label="Primary" className="flex items-center gap-4 text-base">
           <a href="#projects" onClick={(e) => { e.preventDefault(); scrollToId("projects"); }} className={`hidden sm:inline ${linkCls}`}>Projects</a>
           <a href="#work" onClick={(e) => { e.preventDefault(); scrollToId("work"); }} className={`hidden sm:inline ${linkCls}`}>Work</a>
           <a href="#contact" onClick={(e) => { e.preventDefault(); scrollToId("contact"); }} className={`hidden sm:inline ${linkCls}`}>Contact</a>
-          <button type="button" onClick={openPalette} aria-label="Open command palette" className="hidden rounded-md border border-line px-2 py-1 text-xs text-mute hover:text-ink sm:inline">Ctrl K</button>
+          <button type="button" onClick={openPalette} aria-label="Open command palette" className="hidden rounded-md border border-line px-2 py-1 text-sm text-mute hover:text-ink sm:inline">Ctrl K</button>
           <button type="button" onClick={openPalette} aria-label="Open menu" className={`p-1.5 sm:hidden ${linkCls}`}>{icons.menu}</button>
         </nav>
       </div>
@@ -59,17 +59,17 @@ function Contact() {
     window.location.href = `mailto:${PROFILE.email}?subject=${encodeURIComponent("Portfolio message from " + f.get("name"))}&body=${encodeURIComponent(body)}`;
     setStatus("Opening your email app to send the message.");
   };
-  const field = "w-full rounded-lg border border-line bg-card px-3 py-2 text-sm placeholder:text-mute focus:border-accent";
+  const field = "w-full rounded-lg border border-line bg-card px-3 py-2 text-base placeholder:text-mute focus:border-accent";
   return (
     <section id="contact" aria-labelledby="contact-h" className="scroll-mt-20 py-10">
       <H2 id="contact-h">Contact</H2>
       <p className="mb-6 text-mute">{CONTACT.note}</p>
       <form id="contact-form" onSubmit={submit} className="space-y-3">
-        <label className="block text-sm"><span className="mb-1 block text-mute">Name</span><input name="name" required autoComplete="name" className={field} /></label>
-        <label className="block text-sm"><span className="mb-1 block text-mute">Email</span><input name="email" type="email" required autoComplete="email" className={field} /></label>
-        <label className="block text-sm"><span className="mb-1 block text-mute">Message</span><textarea name="message" rows={4} required className={field} /></label>
-        <button type="submit" className="rounded-lg bg-ink px-4 py-2 text-sm font-medium text-bg hover:opacity-90">Send message</button>
-        <p role="status" aria-live="polite" className="min-h-5 text-sm text-mute">{status}</p>
+        <label className="block text-base"><span className="mb-1 block text-mute">Name</span><input name="name" required autoComplete="name" className={field} /></label>
+        <label className="block text-base"><span className="mb-1 block text-mute">Email</span><input name="email" type="email" required autoComplete="email" className={field} /></label>
+        <label className="block text-base"><span className="mb-1 block text-mute">Message</span><textarea name="message" rows={4} required className={field} /></label>
+        <button type="submit" className="rounded-lg bg-ink px-5 py-2.5 text-base font-medium text-bg hover:opacity-90">Send message</button>
+        <p role="status" aria-live="polite" className="min-h-5 text-base text-mute">{status}</p>
       </form>
     </section>
   );
@@ -117,8 +117,8 @@ export default function App() {
               <a href={PROFILE.github} target="_blank" rel="noreferrer" aria-label="GitHub" className={iconLink}>{icons.github}</a>
               <a href={PROFILE.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn" className={iconLink}>{icons.linkedin}</a>
               <a href={`mailto:${PROFILE.email}`} aria-label="Email" className={iconLink}>{icons.mail}</a>
-              <a href={PROFILE.cv} download className="ml-2 text-sm underline underline-offset-4">Download CV</a>
-              <span className="ml-2 inline-flex items-center gap-2 rounded-full border border-line px-3 py-1 text-xs text-mute">
+              <a href={PROFILE.cv} download className="ml-2 text-base underline underline-offset-4">Download CV</a>
+              <span className="ml-2 inline-flex items-center gap-2 rounded-full border border-line px-3 py-1 text-sm text-mute">
                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" aria-hidden="true" />{PROFILE.badge}
               </span>
             </div>
@@ -129,9 +129,9 @@ export default function App() {
             <div className="space-y-4 text-mute">{ABOUT.paragraphs.map((p) => <p key={p}>{p}</p>)}</div>
             <blockquote className="my-8 border-l-2 border-accent pl-4">
               <p className="italic">“{quote.text}”</p>
-              <footer className="mt-1 text-sm text-mute">{quote.by}</footer>
+              <footer className="mt-1 text-base text-mute">{quote.by}</footer>
             </blockquote>
-            <p className="text-sm text-mute"><span className="text-ink">Technologies I work with:</span> {ABOUT.tech.join(", ")}</p>
+            <div><p className="text-base">Technologies I work with:</p><div className="mt-3 flex flex-wrap gap-2">{ABOUT.tech.map((t) => <span key={t} className="rounded-full border border-line px-3 py-1 text-sm text-ink/90">{t}</span>)}</div></div>
           </section>
 
           <section id="projects" aria-labelledby="proj-h" className="scroll-mt-20 py-10">
@@ -144,15 +144,14 @@ export default function App() {
                       className="mb-4 aspect-[16/9] w-full rounded-xl border border-line object-cover object-top" />
                   )}
                   <div className="flex items-baseline justify-between gap-4">
-                    <h3 className="font-medium">{p.title}</h3>
-                    <span className="flex gap-4 text-sm">
+                    <h3 className="text-lg font-medium">{p.title}</h3>
+                    <span className="flex gap-4 text-base">
                       {p.live && <a href={p.live} target="_blank" rel="noreferrer" className="underline underline-offset-4">Live</a>}
                       <a href={p.code} target="_blank" rel="noreferrer" className="underline underline-offset-4">Code</a>
                     </span>
                   </div>
                   <p className="mt-1 text-mute">{p.blurb}</p>
-                  {p.flow && <p className="mt-2 text-sm text-accent">{p.flow}</p>}
-                  <div className="mt-3 flex flex-wrap gap-2">{p.tags.map((t) => <span key={t} className="rounded-full border border-line px-2.5 py-0.5 text-xs text-mute">{t}</span>)}</div>
+                  <div className="mt-3 flex flex-wrap gap-2">{p.tags.map((t) => <span key={t} className="rounded-full border border-line px-3 py-1 text-sm text-ink/80">{t}</span>)}</div>
                 </article>
               ))}
               <p className="text-mute/80">More coming soon</p>
@@ -167,12 +166,13 @@ export default function App() {
                   <summary className="flex cursor-pointer list-none items-center gap-3 [&::-webkit-details-marker]:hidden">
                     <span className="text-mute transition-transform group-open:rotate-90">{icons.chevron}</span>
                     <span className="min-w-0 flex-1">
-                      <span className="block font-medium">{e.company}{e.current && <span className="ml-2 rounded-full border border-line px-2 py-0.5 align-middle text-[10px] font-normal text-mute">Working</span>}</span>
-                      <span className="block text-sm text-ink/70">{e.role}</span>
+                      <span className="block text-lg font-medium">{e.company}{e.current && <span className="ml-2 rounded-full border border-line px-2 py-0.5 align-middle text-xs font-normal text-mute">Working</span>}</span>
+                      <span className="block text-base text-ink/70">{e.role}</span>
+                      <span className="mt-0.5 block text-sm text-mute sm:hidden">{e.period}</span>
                     </span>
-                    <span className="shrink-0 text-xs text-mute">{e.period}</span>
+                    <span className="hidden shrink-0 text-sm text-mute sm:block">{e.period}</span>
                   </summary>
-                  <ul className="mt-3 list-disc space-y-2 pl-8 text-sm text-ink/80">{e.points.map((p) => <li key={p}>{p}</li>)}</ul>
+                  <ul className="mt-3 list-disc space-y-2 pl-8 text-base text-ink/80">{e.points.map((p) => <li key={p}>{p}</li>)}</ul>
                 </details>
               ))}
             </div>
@@ -181,7 +181,7 @@ export default function App() {
           <Contact />
         </main>
         <footer className="mx-auto max-w-[640px] px-5 pb-16 pt-6">
-          <button type="button" onClick={toTop} className="inline-flex items-center gap-2 text-sm text-mute hover:text-ink">
+          <button type="button" onClick={toTop} className="inline-flex items-center gap-2 text-base text-mute hover:text-ink">
             {icons.plane} Cleared for takeoff
           </button>
         </footer>
