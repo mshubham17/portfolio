@@ -1,182 +1,195 @@
-import { ArrowUpRight, Code2, Download, Mail } from "lucide-react";
-import { Navbar } from "@/components/Navbar";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { PROFILE, ABOUT, EXPERIENCE, PROJECTS, CONTACT } from "@/data";
+import { BlackHole } from "@/components/BlackHole";
 import { Sky } from "@/components/Sky";
-import { ContactForm } from "@/components/Contact";
-import { AltitudeMeter, KonamiPlane } from "@/components/Extras";
-import { site, tech, about, projects, experience, contact, footer } from "@/data";
+import { Altitude } from "@/components/Altitude";
+import { Palette } from "@/components/Palette";
 
-const GithubIcon = (p) => (
-  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" {...p}><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.04-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.68 0-1.25.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.62 1.59.23 2.76.11 3.05.74.81 1.18 1.84 1.18 3.09 0 4.41-2.69 5.39-5.25 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg>
-);
-const LinkedinIcon = (p) => (
-  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" {...p}><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12ZM7.12 20.45H3.56V9h3.56v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0Z"/></svg>
-);
+const reduced = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const scrollToId = (id) => document.getElementById(id)?.scrollIntoView({ behavior: reduced() ? "auto" : "smooth", block: "start" });
+const toTop = () => window.scrollTo({ top: 0, behavior: reduced() ? "auto" : "smooth" });
 
-const Pipeline = ({ steps }) => (
-  <ol className="flex flex-col @lg:flex-row @lg:items-stretch gap-1 list-none p-0 m-0" aria-label="Pipeline">
-    {steps.map(([label, sub], i) => (
-      <li key={label} className="contents">
-        <div className="flex-1 basis-0 min-w-0 rounded-xl border border-[#b9c0d2] bg-white/60 px-2 py-2 text-center">
-          <div className="text-xs font-bold break-words">{label}</div>
-          {sub && <div className="text-[11px] muted break-words leading-tight">{sub}</div>}
-        </div>
-        {i < steps.length - 1 && (
-          <span aria-hidden="true" className="self-center text-[#475066] rotate-90 @lg:rotate-0 leading-none">›</span>
-        )}
-      </li>
-    ))}
-  </ol>
+const Icon = ({ d, ...p }) => (
+  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" {...p}>{d}</svg>
 );
+const icons = {
+  github: <Icon d={<path d="M9 19c-4 1.5-4-2-6-2m12 4v-3.5c0-1 .1-1.4-.5-2 2.800-.3 5.500-1.400 5.500-6a4.600 4.600 0 0 0-1.300-3.200 4.200 4.200 0 0 0-.1-3.200s-1.100-.3-3.500 1.300a12 12 0 0 0-6.200 0C6.500 2.800 5.400 3.100 5.400 3.100a4.200 4.200 0 0 0-.1 3.200A4.600 4.600 0 0 0 4 9.500c0 4.600 2.700 5.700 5.500 6-.6.600-.6 1.200-.5 2V21" />} />,
+  linkedin: <Icon d={<><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6Z" /><rect x="2" y="9" width="4" height="12" /><circle cx="4" cy="4" r="2" /></>} />,
+  mail: <Icon d={<><rect x="2" y="4" width="20" height="16" rx="2" /><path d="m22 7-10 6L2 7" /></>} />,
+  sun: <Icon d={<><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.900 4.900l1.400 1.400M17.700 17.700l1.400 1.400M2 12h2M20 12h2M4.900 19.100l1.400-1.400M17.700 6.300l1.400-1.400" /></>} />,
+  moon: <Icon d={<path d="M21 12.800A9 9 0 1 1 11.200 3 7 7 0 0 0 21 12.800Z" />} />,
+  menu: <Icon d={<path d="M3 6h18M3 12h18M3 18h18" />} />,
+  chevron: <Icon d={<path d="m9 6 6 6-6 6" />} width="16" height="16" />,
+  plane: <Icon d={<path d="M17.800 19.200 16 11l3.500-3.500C21 6 21.500 4 21.500 4s-2 .5-3.500 2L14.500 9.500 6.300 7.700l-1.100 1.100 6.300 3.400-3.500 3.500-3-.5L4 16.300l3.500 1.200 1.200 3.500 1.100-1.100-.5-3 3.500-3.500 3.400 6.300 1.100-1.100Z" />} width="16" height="16" />,
+};
 
-const ProjectTile = ({ p, paper, i }) => (
-  <article className={`tile ${paper ? "tile-paper" : ""} @container lg:col-span-6 flex flex-col`} style={{ "--i": i }}>
-    <h3 className="font-display font-bold tracking-tight text-2xl">{p.title}</h3>
-    <p className={`mt-3 text-[15px] leading-relaxed ${paper ? "muted" : "text-muted"}`}>{p.description}</p>
-    <div className="mt-6 mb-6">
-      {paper ? <Pipeline steps={p.pipeline} /> : <DarkPipeline steps={p.pipeline} />}
-    </div>
-    <div className="mt-auto flex flex-wrap items-center gap-2">
-      <a href={p.code} target="_blank" rel="noreferrer" className={`inline-flex items-center gap-1.5 rounded-full px-4 py-1.5 text-sm font-semibold mr-2 ${paper ? "bg-[#12151b] text-white" : "bg-ink text-base"}`}>
-        <Code2 size={14} aria-hidden="true" /> Code
-      </a>
-      {p.tags.map((t) => <span key={t} className="chip">{t}</span>)}
-    </div>
-  </article>
-);
+const linkCls = "text-mute transition-colors hover:text-ink";
 
-const DarkPipeline = ({ steps }) => (
-  <ol className="flex flex-col @lg:flex-row @lg:items-stretch gap-1 list-none p-0 m-0" aria-label="Pipeline">
-    {steps.map(([label, sub], i) => (
-      <li key={label} className="contents">
-        <div className="flex-1 basis-0 min-w-0 rounded-xl border border-line bg-base px-2 py-2 text-center">
-          <div className="text-xs font-bold break-words">{label}</div>
-          {sub && <div className="text-[11px] text-muted break-words leading-tight">{sub}</div>}
-        </div>
-        {i < steps.length - 1 && (
-          <span aria-hidden="true" className="self-center text-muted rotate-90 @lg:rotate-0 leading-none">›</span>
-        )}
-      </li>
-    ))}
-  </ol>
-);
-
-function Home() {
-  const half = Math.ceil(experience.length / 2);
-  const cols = [experience.slice(0, half), experience.slice(half)];
+function Header({ dark, toggleTheme, openPalette }) {
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const on = () => setScrolled(window.scrollY > 8);
+    on(); window.addEventListener("scroll", on, { passive: true });
+    return () => window.removeEventListener("scroll", on);
+  }, []);
   return (
-    <>
-      <Navbar />
-      <AltitudeMeter />
-      <KonamiPlane />
-      <main id="top" className="mx-auto max-w-[1280px] px-4 md:px-6 py-4 md:py-6 grid grid-cols-1 lg:grid-cols-12 gap-4">
-        {/* Row 1 */}
-        <section className="tile tile-blue lg:col-span-8 flex flex-col justify-between min-h-[22rem]" style={{ "--i": 0 }}>
-          <div className="stars" aria-hidden="true" />
-          <div className="relative">
-            <span className="inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-sm font-medium">
-              <span className="h-2 w-2 rounded-full bg-[#7CFFB2]" aria-hidden="true" /> {site.badge}
-            </span>
-            <h1 className="mt-6 font-display font-bold tracking-tighter text-5xl sm:text-6xl lg:text-7xl leading-[1.02]">{site.name}</h1>
-            <p className="mt-3 font-display text-lg md:text-xl font-semibold">{site.role}</p>
-            <p className="mt-3 max-w-xl text-white/90">{site.tagline}</p>
-          </div>
-          <div className="relative mt-8 flex flex-wrap gap-3">
-            <a href="#contact" className="inline-flex items-center gap-2 rounded-full bg-white text-[#1a2a9c] px-6 py-3 font-semibold hover:bg-paper"><Mail size={16} aria-hidden="true" /> Get in touch</a>
-            <a href={site.cvUrl} download className="inline-flex items-center gap-2 rounded-full border border-white/60 px-6 py-3 font-semibold hover:bg-white/10"><Download size={16} aria-hidden="true" /> Download CV</a>
-          </div>
-        </section>
-
-        <aside className="tile lg:col-span-4 flex flex-col" style={{ "--i": 1 }} aria-label="Tech stack and links">
-          <h2 className="font-display font-bold text-lg">Tech stack</h2>
-          <div className="mt-4 flex flex-wrap gap-2">{tech.map((t) => <span key={t} className="chip !text-ink">{t}</span>)}</div>
-          <div className="mt-6 flex gap-3">
-            <a href={site.github} target="_blank" rel="noreferrer" aria-label="GitHub" className="p-3 rounded-xl border border-line hover:border-muted"><GithubIcon width="20" height="20" /></a>
-            <a href={site.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn" className="p-3 rounded-xl border border-line hover:border-muted"><LinkedinIcon width="20" height="20" /></a>
-          </div>
-          <div className="mt-auto"><Sky /></div>
-        </aside>
-
-        {/* Row 2 */}
-        <div id="projects" className="contents">
-          <ProjectTile p={projects[1]} paper i={2} />
-          <ProjectTile p={projects[0]} i={3} />
-        </div>
-
-        {/* Row 3 */}
-        <aside className="tile lg:col-span-4" style={{ "--i": 4 }}>
-          <h2 className="text-xs uppercase tracking-widest text-muted">Now</h2>
-          <div className="mt-4 flex items-center gap-4">
-            <div className="radar" aria-hidden="true"><i /></div>
-            <div>
-              <p className="font-display font-bold text-xl leading-tight">{site.nowRole}</p>
-              <p className="text-muted">{site.nowCompany}</p>
-            </div>
-          </div>
-        </aside>
-        <section id="about" className="tile lg:col-span-8" style={{ "--i": 5 }}>
-          <h2 className="font-display font-bold tracking-tight text-3xl">{about.heading}</h2>
-          {about.paragraphs.map((t) => <p key={t} className="mt-4 text-muted leading-relaxed">{t}</p>)}
-          <blockquote className="mt-6 border-l-2 border-electric pl-4">
-            <p className="text-ink italic">“{about.quote}”</p>
-            <footer className="mt-1 text-sm text-muted">- {about.quoteBy}</footer>
-          </blockquote>
-        </section>
-
-        {/* Row 4 */}
-        <section id="experience" className="tile lg:col-span-12" style={{ "--i": 6 }}>
-          <h2 className="font-display font-bold tracking-tight text-3xl">Career journey</h2>
-          <div className="mt-6 grid gap-8 lg:grid-cols-2">
-            {cols.map((col, ci) => (
-              <div key={ci} className="space-y-8">
-                {col.map((e) => (
-                  <article key={e.period} className="min-w-0">
-                    <p className="text-sm text-muted">{e.period}</p>
-                    <h3 className="font-display font-bold text-xl mt-1">{e.role}</h3>
-                    <p className="text-[#9db0ff]">{e.company}</p>
-                    <ul className="mt-3 space-y-2 text-[15px] text-muted list-disc pl-5">
-                      {e.points.map((p) => <li key={p}>{p}</li>)}
-                    </ul>
-                    <div className="mt-3 flex flex-wrap gap-2">{e.tags.map((t) => <span key={t} className="chip">{t}</span>)}</div>
-                  </article>
-                ))}
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Row 5 */}
-        <section id="contact" className="tile lg:col-span-8" style={{ "--i": 7 }}>
-          <h2 className="font-display font-bold tracking-tight text-3xl">{contact.heading}</h2>
-          <p className="mt-2 mb-6 text-muted">{contact.text}</p>
-          <ContactForm />
-        </section>
-        <aside className="tile lg:col-span-4" style={{ "--i": 8 }}>
-          <span className="inline-flex items-center gap-2 text-sm"><span className="h-2.5 w-2.5 rounded-full bg-[#3ddc97]" aria-hidden="true" />{contact.availabilityTitle}</span>
-          <p className="mt-4 text-muted leading-relaxed">{contact.availabilityText}</p>
-          <a href="#top" className="mt-6 inline-flex items-center gap-1 text-sm text-ink underline underline-offset-4">Back to top <ArrowUpRight size={14} aria-hidden="true" /></a>
-        </aside>
-      </main>
-      <footer className="mx-auto max-w-[1280px] px-4 md:px-6 py-8 flex flex-col md:flex-row gap-2 md:justify-between text-sm text-muted">
-        <p>© {new Date().getFullYear()} {site.name}</p>
-        <p>{footer.right}</p>
-      </footer>
-    </>
+    <header className={`sticky top-0 z-30 transition-colors ${scrolled ? "border-b border-line bg-bg/80 backdrop-blur-md" : "border-b border-transparent"}`}>
+      <div className="mx-auto flex h-14 max-w-[640px] items-center justify-between px-5">
+        <a href="#top" onClick={(e) => { e.preventDefault(); toTop(); }} className="flex items-center gap-2 font-medium">
+          Shubham <span className="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden="true" />
+        </a>
+        <nav aria-label="Primary" className="flex items-center gap-4 text-sm">
+          <a href="#work" onClick={(e) => { e.preventDefault(); scrollToId("work"); }} className={`hidden sm:inline ${linkCls}`}>Work</a>
+          <a href="#projects" onClick={(e) => { e.preventDefault(); scrollToId("projects"); }} className={`hidden sm:inline ${linkCls}`}>Projects</a>
+          <a href="#contact" onClick={(e) => { e.preventDefault(); scrollToId("contact"); }} className={`hidden sm:inline ${linkCls}`}>Contact</a>
+          <button type="button" onClick={openPalette} aria-label="Open command palette" className="hidden rounded-md border border-line px-2 py-1 text-xs text-mute hover:text-ink sm:inline">Ctrl K</button>
+          <button type="button" onClick={toggleTheme} aria-label={dark ? "Switch to light theme" : "Switch to dark theme"} className={`p-1.5 ${linkCls}`}>{dark ? icons.sun : icons.moon}</button>
+          <button type="button" onClick={openPalette} aria-label="Open menu" className={`p-1.5 sm:hidden ${linkCls}`}>{icons.menu}</button>
+        </nav>
+      </div>
+    </header>
   );
 }
 
-function NotFound() {
+const H2 = ({ children, id }) => <h2 id={id} className="mb-5 font-display text-2xl tracking-tight">{children}</h2>;
+
+function Contact() {
+  const [status, setStatus] = useState("");
+  const submit = (e) => {
+    e.preventDefault();
+    const f = new FormData(e.currentTarget);
+    const body = `${f.get("message")}\n\n${f.get("name")} (${f.get("email")})`;
+    window.location.href = `mailto:${PROFILE.email}?subject=${encodeURIComponent("Portfolio message from " + f.get("name"))}&body=${encodeURIComponent(body)}`;
+    setStatus("Opening your email app to send the message.");
+  };
+  const field = "w-full rounded-lg border border-line bg-card px-3 py-2 text-sm placeholder:text-mute focus:border-accent";
   return (
-    <main className="min-h-screen grid place-items-center px-4 text-center">
-      <div>
-        <p className="text-muted text-sm tracking-widest">404</p>
-        <h1 className="mt-3 font-display font-bold tracking-tighter text-4xl sm:text-6xl">Off the chart. Return to base.</h1>
-        <a href="/" className="mt-8 inline-block rounded-full bg-electric px-6 py-3 font-semibold text-white">Back to home</a>
-      </div>
-    </main>
+    <section id="contact" aria-labelledby="contact-h" className="scroll-mt-20 py-10">
+      <H2 id="contact-h">Contact</H2>
+      <p className="mb-6 text-mute">{CONTACT.note}</p>
+      <form id="contact-form" onSubmit={submit} className="space-y-3">
+        <label className="block text-sm"><span className="mb-1 block text-mute">Name</span><input name="name" required autoComplete="name" className={field} /></label>
+        <label className="block text-sm"><span className="mb-1 block text-mute">Email</span><input name="email" type="email" required autoComplete="email" className={field} /></label>
+        <label className="block text-sm"><span className="mb-1 block text-mute">Message</span><textarea name="message" rows={4} required className={field} /></label>
+        <button type="submit" className="rounded-lg bg-ink px-4 py-2 text-sm font-medium text-bg hover:opacity-90">Send message</button>
+        <p role="status" aria-live="polite" className="min-h-5 text-sm text-mute">{status}</p>
+      </form>
+    </section>
   );
 }
 
 export default function App() {
-  const known = window.location.pathname === "/" || window.location.pathname === "/index.html";
-  return known ? <Home /> : <NotFound />;
+  const [dark, setDark] = useState(() => document.documentElement.classList.contains("dark"));
+  const [paletteOpen, setPaletteOpen] = useState(false);
+
+  const toggleTheme = useCallback(() => {
+    const next = !document.documentElement.classList.contains("dark");
+    document.documentElement.classList.toggle("dark", next);
+    setDark(next);
+    try { localStorage.setItem("theme", next ? "dark" : "light"); } catch { /* ignore */ }
+  }, []);
+
+  useEffect(() => {
+    const onKey = (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") { e.preventDefault(); setPaletteOpen((o) => !o); }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
+  const commands = useMemo(() => [
+    { label: "About", run: () => scrollToId("about") },
+    { label: "Work experience", run: () => scrollToId("work") },
+    { label: "Projects", run: () => scrollToId("projects") },
+    { label: "Contact", run: () => scrollToId("contact") },
+    { label: "Toggle theme", run: toggleTheme },
+    { label: "Download CV", run: () => { const a = document.createElement("a"); a.href = PROFILE.cv; a.download = ""; a.click(); } },
+    { label: "GitHub", run: () => window.open(PROFILE.github, "_blank", "noopener") },
+    { label: "LinkedIn", run: () => window.open(PROFILE.linkedin, "_blank", "noopener") },
+    { label: "Cleared for takeoff", run: toTop },
+    { label: "Request clearance", run: () => { scrollToId("contact"); setTimeout(() => document.querySelector("#contact-form input")?.focus({ preventScroll: true }), reduced() ? 0 : 600); } },
+  ], [toggleTheme]);
+
+  const iconLink = "p-1.5 text-mute transition-colors hover:text-ink";
+  return (
+    <>
+      <BlackHole />
+      <Sky />
+      <Altitude />
+      <Palette open={paletteOpen} onClose={() => setPaletteOpen(false)} commands={commands} />
+      <div className="relative z-10">
+        <Header dark={dark} toggleTheme={toggleTheme} openPalette={() => setPaletteOpen(true)} />
+        <main id="top" className="mx-auto max-w-[640px] px-5">
+          <section className="pb-16 pt-16 sm:pt-24">
+            <h1 className="font-display text-5xl font-semibold tracking-tight sm:text-6xl">{PROFILE.name}</h1>
+            <p className="mt-3 text-lg">{PROFILE.subtitle}</p>
+            <p className="mt-3 text-mute">{PROFILE.tagline}</p>
+            <div className="mt-6 flex flex-wrap items-center gap-x-2 gap-y-3">
+              <a href={PROFILE.github} target="_blank" rel="noreferrer" aria-label="GitHub" className={iconLink}>{icons.github}</a>
+              <a href={PROFILE.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn" className={iconLink}>{icons.linkedin}</a>
+              <a href={`mailto:${PROFILE.email}`} aria-label="Email" className={iconLink}>{icons.mail}</a>
+              <a href={PROFILE.cv} download className="ml-2 text-sm underline underline-offset-4">Download CV</a>
+              <span className="ml-2 inline-flex items-center gap-2 rounded-full border border-line px-3 py-1 text-xs text-mute">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" aria-hidden="true" />{PROFILE.badge}
+              </span>
+            </div>
+          </section>
+
+          <section id="about" aria-labelledby="about-h" className="scroll-mt-20 py-10">
+            <H2 id="about-h">{ABOUT.heading}</H2>
+            <div className="space-y-4 text-mute">{ABOUT.paragraphs.map((p) => <p key={p}>{p}</p>)}</div>
+            <blockquote className="my-8 border-l-2 border-accent pl-4">
+              <p className="italic">“{ABOUT.quote}”</p>
+              <footer className="mt-1 text-sm text-mute">{ABOUT.quoteBy}</footer>
+            </blockquote>
+            <p className="text-sm text-mute"><span className="text-ink">Technologies I work with:</span> {ABOUT.tech.join(", ")}</p>
+          </section>
+
+          <section id="work" aria-labelledby="work-h" className="scroll-mt-20 py-10">
+            <H2 id="work-h">Work experience</H2>
+            <div className="divide-y divide-line border-y border-line">
+              {EXPERIENCE.map((e) => (
+                <details key={e.company} className="group py-4">
+                  <summary className="flex cursor-pointer list-none items-center gap-3 [&::-webkit-details-marker]:hidden">
+                    <span className="text-mute transition-transform group-open:rotate-90">{icons.chevron}</span>
+                    <span className="min-w-0 flex-1">
+                      <span className="block font-medium">{e.company}{e.current && <span className="ml-2 rounded-full border border-line px-2 py-0.5 align-middle text-[10px] font-normal text-mute">Working</span>}</span>
+                      <span className="block text-sm text-mute">{e.role}</span>
+                    </span>
+                    <span className="shrink-0 text-xs text-mute">{e.period}</span>
+                  </summary>
+                  <ul className="mt-3 list-disc space-y-2 pl-12 text-sm text-mute">{e.points.map((p) => <li key={p}>{p}</li>)}</ul>
+                </details>
+              ))}
+            </div>
+          </section>
+
+          <section id="projects" aria-labelledby="proj-h" className="scroll-mt-20 py-10">
+            <H2 id="proj-h">Featured work</H2>
+            <div className="space-y-8">
+              {PROJECTS.map((p) => (
+                <article key={p.title}>
+                  <div className="flex items-baseline justify-between gap-4">
+                    <h3 className="font-medium">{p.title}</h3>
+                    <a href={p.code} target="_blank" rel="noreferrer" className="text-sm underline underline-offset-4">Code</a>
+                  </div>
+                  <p className="mt-1 text-mute">{p.blurb}</p>
+                  <p className="mt-2 text-sm text-accent">{p.flow}</p>
+                  <div className="mt-3 flex flex-wrap gap-2">{p.tags.map((t) => <span key={t} className="rounded-full border border-line px-2.5 py-0.5 text-xs text-mute">{t}</span>)}</div>
+                </article>
+              ))}
+              <p className="text-mute/80">More coming soon</p>
+            </div>
+          </section>
+
+          <Contact />
+        </main>
+        <footer className="mx-auto max-w-[640px] px-5 pb-16 pt-6">
+          <button type="button" onClick={toTop} className="inline-flex items-center gap-2 text-sm text-mute hover:text-ink">
+            {icons.plane} Cleared for takeoff
+          </button>
+        </footer>
+      </div>
+    </>
+  );
 }

@@ -1,17 +1,17 @@
-# Shubham Mehta | Portfolio
+# Shubham Mehta: portfolio
 
-A modern portfolio built to reflect how I think about design, structure, and user experience.
+Vite + React 19 + Tailwind CSS v4. All content lives in `src/data.js`.
 
-This is my personal portfolio, a space where I document my growth as a developer and share the projects I’ve been building along the way.
-Every section reflects something I’ve learned  from layout decisions to theme architecture and UI polish.
+```
+npm install
+npm run dev      # local
+npm run build    # outputs dist/
+vercel           # framework preset: Vite, output: dist
+```
 
-This portfolio will evolve as I do.
+## TODO before launch
+- [ ] Confirm `public/Shubham_Resume.pdf` is the CV you want (it exists in the repo now).
+- [ ] Set a real email in `src/data.js` (`PROFILE.email`). The contact form and the email icon use it.
+- [ ] Set real repo URLs in `src/data.js` (`PROJECTS[].code`): MediBot is a placeholder, and the Drowning Detection link (`Emotion-detector`) needs confirming.
 
-## Tech Stack
-
-- React 19 — UI library  
-- Vite — Build tool & dev server  
-- Tailwind CSS v4 — Styling framework  
-- JavaScript (ES6+) — Language  
-- CSS Variables — Custom theme system  
-- Git & GitHub — Version control  
+Shortcuts: Ctrl/Cmd+K opens the command palette (also the mobile menu).
