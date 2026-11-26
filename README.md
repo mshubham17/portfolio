@@ -14,4 +14,4 @@ vercel           # framework preset: Vite, output: dist
 - [ ] Set a real email in `src/data.js` (`PROFILE.email`). The contact form and the email icon use it.
 - [ ] Confirm the Drowning Detection repo URL in `src/data.js` (`Emotion-detector`).
 
-Shortcuts: Ctrl/Cmd+K opens the command palette (also the mobile menu). The site is dark-only.
+The site is dark-only.

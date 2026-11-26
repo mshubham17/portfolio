@@ -25,5 +25,5 @@ export function Altitude() {
     window.addEventListener("resize", onScroll);
     return () => { window.removeEventListener("scroll", onScroll); window.removeEventListener("resize", onScroll); };
   }, []);
-  return <div ref={ref} aria-hidden="true" className="pointer-events-none fixed bottom-3 left-4 z-20 text-[11px] tabular-nums text-mute/70 sm:bottom-4 sm:left-5" />;
+  return <div ref={ref} aria-hidden="true" className="pointer-events-none fixed bottom-3 left-4 z-20 rounded bg-bg/80 px-1.5 py-0.5 text-[11px] tabular-nums text-mute backdrop-blur-sm sm:bottom-4 sm:left-5" />;
 }

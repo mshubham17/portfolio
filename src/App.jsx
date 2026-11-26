@@ -1,9 +1,8 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { PROFILE, ABOUT, EXPERIENCE, PROJECTS, CONTACT } from "@/data";
 import { BlackHole } from "@/components/BlackHole";
 import { Sky } from "@/components/Sky";
 import { Altitude } from "@/components/Altitude";
-import { Palette } from "@/components/Palette";
 
 const reduced = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const scrollToId = (id) => document.getElementById(id)?.scrollIntoView({ behavior: reduced() ? "auto" : "smooth", block: "start" });
@@ -16,14 +15,13 @@ const icons = {
   github: <Icon d={<path d="M9 19c-4 1.5-4-2-6-2m12 4v-3.5c0-1 .1-1.4-.5-2 2.800-.3 5.500-1.400 5.500-6a4.600 4.600 0 0 0-1.300-3.200 4.200 4.200 0 0 0-.1-3.200s-1.100-.3-3.500 1.300a12 12 0 0 0-6.200 0C6.500 2.800 5.400 3.100 5.400 3.100a4.200 4.200 0 0 0-.1 3.200A4.600 4.600 0 0 0 4 9.500c0 4.600 2.700 5.700 5.500 6-.6.600-.6 1.200-.5 2V21" />} />,
   linkedin: <Icon d={<><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6Z" /><rect x="2" y="9" width="4" height="12" /><circle cx="4" cy="4" r="2" /></>} />,
   mail: <Icon d={<><rect x="2" y="4" width="20" height="16" rx="2" /><path d="m22 7-10 6L2 7" /></>} />,
-  menu: <Icon d={<path d="M3 6h18M3 12h18M3 18h18" />} />,
   chevron: <Icon d={<path d="m9 6 6 6-6 6" />} width="16" height="16" />,
   plane: <Icon d={<path d="M17.800 19.200 16 11l3.500-3.500C21 6 21.500 4 21.500 4s-2 .5-3.500 2L14.500 9.500 6.300 7.700l-1.100 1.100 6.300 3.400-3.500 3.500-3-.5L4 16.300l3.500 1.200 1.200 3.500 1.100-1.100-.5-3 3.500-3.500 3.400 6.300 1.100-1.100Z" />} width="16" height="16" />,
 };
 
 const linkCls = "text-mute transition-colors hover:text-ink";
 
-function Header({ openPalette }) {
+function Header() {
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
     const on = () => setScrolled(window.scrollY > 8);
@@ -36,12 +34,10 @@ function Header({ openPalette }) {
         <a href="#top" onClick={(e) => { e.preventDefault(); toTop(); }} className="flex items-center gap-2 font-medium">
           Shubham <span className="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden="true" />
         </a>
-        <nav aria-label="Primary" className="flex items-center gap-4 text-base">
-          <a href="#projects" onClick={(e) => { e.preventDefault(); scrollToId("projects"); }} className={`hidden sm:inline ${linkCls}`}>Projects</a>
-          <a href="#work" onClick={(e) => { e.preventDefault(); scrollToId("work"); }} className={`hidden sm:inline ${linkCls}`}>Work</a>
-          <a href="#contact" onClick={(e) => { e.preventDefault(); scrollToId("contact"); }} className={`hidden sm:inline ${linkCls}`}>Contact</a>
-          <button type="button" onClick={openPalette} aria-label="Open command palette" className="hidden rounded-md border border-line px-2 py-1 text-sm text-mute hover:text-ink sm:inline">Ctrl K</button>
-          <button type="button" onClick={openPalette} aria-label="Open menu" className={`p-1.5 sm:hidden ${linkCls}`}>{icons.menu}</button>
+        <nav aria-label="Primary" className="flex items-center gap-4 text-sm sm:gap-6 sm:text-base">
+          <a href="#projects" onClick={(e) => { e.preventDefault(); scrollToId("projects"); }} className={`${linkCls}`}>Projects</a>
+          <a href="#work" onClick={(e) => { e.preventDefault(); scrollToId("work"); }} className={`${linkCls}`}>Work</a>
+          <a href="#contact" onClick={(e) => { e.preventDefault(); scrollToId("contact"); }} className={`${linkCls}`}>Contact</a>
         </nav>
       </div>
     </header>
@@ -76,28 +72,8 @@ function Contact() {
 }
 
 export default function App() {
-  const [paletteOpen, setPaletteOpen] = useState(false);
+  const [showAll, setShowAll] = useState(false);
   const [quote] = useState(() => ABOUT.quotes[Math.floor(Math.random() * ABOUT.quotes.length)]);
-
-  useEffect(() => {
-    const onKey = (e) => {
-      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") { e.preventDefault(); setPaletteOpen((o) => !o); }
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, []);
-
-  const commands = useMemo(() => [
-    { label: "About", run: () => scrollToId("about") },
-    { label: "Projects", run: () => scrollToId("projects") },
-    { label: "Work experience", run: () => scrollToId("work") },
-    { label: "Contact", run: () => scrollToId("contact") },
-    { label: "Download CV", run: () => { const a = document.createElement("a"); a.href = PROFILE.cv; a.download = ""; a.click(); } },
-    { label: "GitHub", run: () => window.open(PROFILE.github, "_blank", "noopener") },
-    { label: "LinkedIn", run: () => window.open(PROFILE.linkedin, "_blank", "noopener") },
-    { label: "Cleared for takeoff", run: toTop },
-    { label: "Request clearance", run: () => { scrollToId("contact"); setTimeout(() => document.querySelector("#contact-form input")?.focus({ preventScroll: true }), reduced() ? 0 : 600); } },
-  ], []);
 
   const iconLink = "p-1.5 text-mute transition-colors hover:text-ink";
   return (
@@ -105,9 +81,8 @@ export default function App() {
       <BlackHole />
       <Sky />
       <Altitude />
-      <Palette open={paletteOpen} onClose={() => setPaletteOpen(false)} commands={commands} />
       <div className="relative z-10">
-        <Header openPalette={() => setPaletteOpen(true)} />
+        <Header />
         <main id="top" className="mx-auto max-w-[640px] px-5">
           <section className="pb-16 pt-16 sm:pt-24">
             <h1 className="font-display text-5xl font-semibold tracking-tight sm:text-6xl">{PROFILE.name}</h1>
@@ -137,7 +112,7 @@ export default function App() {
           <section id="projects" aria-labelledby="proj-h" className="scroll-mt-20 py-10">
             <H2 id="proj-h">Featured work</H2>
             <div className="space-y-8">
-              {PROJECTS.map((p) => (
+              {(showAll ? PROJECTS : PROJECTS.slice(0, 2)).map((p) => (
                 <article key={p.title}>
                   {p.image && (
                     <img src={p.image} alt={`${p.title} screenshot`} loading="lazy" width="1000" height="560"
@@ -154,7 +129,12 @@ export default function App() {
                   <div className="mt-3 flex flex-wrap gap-2">{p.tags.map((t) => <span key={t} className="rounded-full border border-line px-3 py-1 text-sm text-ink/80">{t}</span>)}</div>
                 </article>
               ))}
-              <p className="text-mute/80">More coming soon</p>
+              {PROJECTS.length > 2 && (
+                <button type="button" onClick={() => setShowAll((v) => !v)} aria-expanded={showAll}
+                  className="rounded-full border border-line px-5 py-2.5 text-base text-ink hover:border-mute">
+                  {showAll ? "Show fewer projects" : `Show more projects (${PROJECTS.length - 2})`}
+                </button>
+              )}
             </div>
           </section>
 
