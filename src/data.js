@@ -16,8 +16,25 @@ export const ABOUT = {
     "I'm an aspiring Full-Stack Developer and a passionate learner who believes that how we build is just as important as what we build.",
     "Away from the keyboard I enjoy films and reading, and I like exploring history, geopolitics, aviation and architecture. I'm naturally curious about how systems work, whether in technology or the real world.",
   ],
-  quote: "Success is nothing more than a few simple disciplines, practiced every day.",
-  quoteBy: "Jim Rohn",
+  // One is picked at random on every page load. Add or remove freely.
+  quotes: [
+    { text: "Hard work beats talent when talent doesn't work hard.", by: "Tim Notke" },
+    { text: "Success is nothing more than a few simple disciplines, practiced every day.", by: "Jim Rohn" },
+    { text: "We are what we repeatedly do. Excellence, then, is not an act, but a habit.", by: "Aristotle" },
+    { text: "The man who moves a mountain begins by carrying away small stones.", by: "Confucius" },
+    { text: "He who has a why to live can bear almost any how.", by: "Friedrich Nietzsche" },
+    { text: "It always seems impossible until it's done.", by: "Nelson Mandela" },
+    { text: "Integrity is doing the right thing, even when no one is watching.", by: "C. S. Lewis" },
+    { text: "The price of greatness is responsibility.", by: "Winston Churchill" },
+    { text: "Discipline equals freedom.", by: "Jocko Willink" },
+    { text: "It’s not that I’m so smart, it’s just that I stay with problems longer.", by: "Albert Einstein" },
+    { text: "Whether you think you can or think you can’t, you’re right.", by: "Henry Ford" },
+    { text: "The best way to predict the future is to invent it.", by: "Alan Kay" },
+    { text: "Make it work, make it right, make it fast.", by: "Kent Beck" },
+    { text: "Simplicity is prerequisite for reliability.", by: "Edsger W. Dijkstra" },
+    { text: "Programs must be written for people to read, and only incidentally for machines to execute.", by: "Harold Abelson" },
+    { text: "The only way to do great work is to love what you do.", by: "Steve Jobs" },
+  ],
   tech: ["React", "Node.js", "MongoDB", "Docker", "Vercel", "Tailwind CSS", "Git", "GitHub"],
 };
 
@@ -54,6 +71,21 @@ export const EXPERIENCE = [
 
 export const PROJECTS = [
   {
+    title: "ISS Tracker",
+    image: "/projects/iss.jpg",
+    blurb: "An interactive 3D visualization of the International Space Station, tracking its real-time position as it orbits Earth.",
+    tags: ["JavaScript", "Vite", "3D visualization", "APIs"],
+    code: "https://github.com/mshubham17/Iss-Tracker",
+    live: "https://iss-tracker-tan.vercel.app",
+  },
+  {
+    title: "Personal Portfolio",
+    image: "/projects/portfolio.jpg",
+    blurb: "My developer portfolio built with React and Tailwind.",
+    tags: ["React", "JavaScript", "Tailwind CSS"],
+    code: "https://github.com/mshubham17/portfolio",
+  },
+  {
     title: "Drowning Detection",
     image: "/projects/drowning.jpg",
     blurb: "IoT and computer vision safety system that analyzes swimming videos and generates a risk score.",
@@ -61,14 +93,6 @@ export const PROJECTS = [
     tags: ["Python", "PyTorch", "OpenCV", "Streamlit", "CVLib"],
     code: "https://github.com/mshubham17/Emotion-detector.git", // TODO: confirm this is the right repo
     live: "https://drowning-detection-vh9z95a68jhonohxhb59ce.streamlit.app/#try-with-a-demo-video",
-  },
-  {
-    title: "ISS Tracker",
-    image: "/projects/iss.jpg",
-    blurb: "An interactive 3D visualization of the International Space Station, tracking its real-time position as it orbits Earth.",
-    tags: ["JavaScript", "Vite", "3D visualization", "APIs"],
-    code: "https://github.com/mshubham17/Iss-Tracker",
-    live: "https://iss-tracker-tan.vercel.app",
   },
   {
     title: "Soil Sentry",
@@ -83,13 +107,6 @@ export const PROJECTS = [
     blurb: "Arduino-powered remote control system: a wireless interface for appliances using RF modules.",
     tags: ["Arduino", "Embedded Systems", "C++"],
     code: "https://github.com/mshubham17/wireless-swtich",
-  },
-  {
-    title: "Personal Portfolio",
-    image: "/projects/portfolio.jpg",
-    blurb: "My developer portfolio built with React and Tailwind.",
-    tags: ["React", "JavaScript", "Tailwind CSS"],
-    code: "https://github.com/mshubham17/portfolio",
   },
 ];
 
