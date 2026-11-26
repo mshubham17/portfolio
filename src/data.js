@@ -54,18 +54,42 @@ export const EXPERIENCE = [
 
 export const PROJECTS = [
   {
-    title: "MediBot",
-    blurb: "RAG-based medical assistant that answers questions from a medical knowledge base.",
-    flow: "Question → Embed → Retrieve → Generate → Answer",
-    tags: ["Python", "Langchain", "HuggingFace Embeddings", "Groq API"],
-    code: "TODO_MEDIBOT_REPO_URL", // TODO: repo URL
-  },
-  {
     title: "Drowning Detection",
+    image: "/projects/drowning.jpg",
     blurb: "IoT and computer vision safety system that analyzes swimming videos and generates a risk score.",
     flow: "Video → Frames → Detect → Risk score → Web app",
     tags: ["Python", "PyTorch", "OpenCV", "Streamlit", "CVLib"],
     code: "https://github.com/mshubham17/Emotion-detector.git", // TODO: confirm this is the right repo
+    live: "https://drowning-detection-vh9z95a68jhonohxhb59ce.streamlit.app/#try-with-a-demo-video",
+  },
+  {
+    title: "ISS Tracker",
+    image: "/projects/iss.jpg",
+    blurb: "An interactive 3D visualization of the International Space Station, tracking its real-time position as it orbits Earth.",
+    tags: ["JavaScript", "Vite", "3D visualization", "APIs"],
+    code: "https://github.com/mshubham17/Iss-Tracker",
+    live: "https://iss-tracker-tan.vercel.app",
+  },
+  {
+    title: "Soil Sentry",
+    image: "/projects/soil-sentry.jpg",
+    blurb: "Arduino-based soil moisture monitoring device: a real-time detection system using analog sensors for precision irrigation.",
+    tags: ["Arduino", "Embedded Systems", "C++"],
+    code: "https://github.com/mshubham17/soil-sentry-system",
+  },
+  {
+    title: "Wireless Switch",
+    image: "/projects/wireless-switch.jpg",
+    blurb: "Arduino-powered remote control system: a wireless interface for appliances using RF modules.",
+    tags: ["Arduino", "Embedded Systems", "C++"],
+    code: "https://github.com/mshubham17/wireless-swtich",
+  },
+  {
+    title: "Personal Portfolio",
+    image: "/projects/portfolio.jpg",
+    blurb: "My developer portfolio built with React and Tailwind.",
+    tags: ["React", "JavaScript", "Tailwind CSS"],
+    code: "https://github.com/mshubham17/portfolio",
   },
 ];
 
