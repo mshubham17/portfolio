@@ -20,7 +20,7 @@ export function BlackHole() {
     <svg
       aria-hidden="true"
       viewBox="0 0 700 700"
-      className="absolute -right-[230px] top-[20vh] w-[480px] opacity-90 dark:opacity-55 sm:w-[700px] sm:dark:opacity-65 lg:-top-20 lg:-right-[330px] lg:w-[960px] lg:dark:opacity-70"
+      className="absolute -right-[230px] top-[20vh] w-[480px] opacity-55 sm:w-[700px] sm:opacity-65 lg:-top-20 lg:-right-[330px] lg:w-[960px] lg:opacity-70"
     >
       <defs>
         <filter id="bh-streak" x="-10%" y="-60%" width="120%" height="220%">

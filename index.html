@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -11,17 +11,8 @@
     <meta property="og:description" content="Into web development and IoT. I write code, connect hardware, and Google responsibly." />
     <meta property="og:url" content="https://mshubham.vercel.app/" />
     <meta name="twitter:card" content="summary" />
-    <script>
-      (function () {
-        try {
-          var t = localStorage.getItem("theme");
-          var dark = t ? t === "dark" : window.matchMedia("(prefers-color-scheme: dark)").matches;
-          document.documentElement.classList.toggle("dark", dark);
-        } catch (e) {
-          document.documentElement.classList.toggle("dark", window.matchMedia("(prefers-color-scheme: dark)").matches);
-        }
-      })();
-    </script>
+    <meta name="theme-color" content="#151412" />
+    <meta name="color-scheme" content="dark" />
   </head>
   <body>
     <div id="root"></div>

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { PROFILE, ABOUT, EXPERIENCE, PROJECTS, CONTACT } from "@/data";
 import { BlackHole } from "@/components/BlackHole";
 import { Sky } from "@/components/Sky";
@@ -16,8 +16,6 @@ const icons = {
   github: <Icon d={<path d="M9 19c-4 1.5-4-2-6-2m12 4v-3.5c0-1 .1-1.4-.5-2 2.800-.3 5.500-1.400 5.500-6a4.600 4.600 0 0 0-1.300-3.200 4.200 4.200 0 0 0-.1-3.200s-1.100-.3-3.500 1.300a12 12 0 0 0-6.200 0C6.500 2.800 5.400 3.100 5.400 3.100a4.200 4.200 0 0 0-.1 3.200A4.600 4.600 0 0 0 4 9.500c0 4.600 2.700 5.700 5.500 6-.6.600-.6 1.200-.5 2V21" />} />,
   linkedin: <Icon d={<><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6Z" /><rect x="2" y="9" width="4" height="12" /><circle cx="4" cy="4" r="2" /></>} />,
   mail: <Icon d={<><rect x="2" y="4" width="20" height="16" rx="2" /><path d="m22 7-10 6L2 7" /></>} />,
-  sun: <Icon d={<><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.900 4.900l1.400 1.400M17.700 17.700l1.400 1.400M2 12h2M20 12h2M4.900 19.100l1.400-1.400M17.700 6.300l1.400-1.400" /></>} />,
-  moon: <Icon d={<path d="M21 12.800A9 9 0 1 1 11.200 3 7 7 0 0 0 21 12.800Z" />} />,
   menu: <Icon d={<path d="M3 6h18M3 12h18M3 18h18" />} />,
   chevron: <Icon d={<path d="m9 6 6 6-6 6" />} width="16" height="16" />,
   plane: <Icon d={<path d="M17.800 19.200 16 11l3.500-3.500C21 6 21.500 4 21.500 4s-2 .5-3.500 2L14.500 9.500 6.300 7.700l-1.100 1.100 6.300 3.400-3.500 3.500-3-.5L4 16.300l3.500 1.200 1.200 3.500 1.100-1.100-.5-3 3.500-3.500 3.400 6.300 1.100-1.100Z" />} width="16" height="16" />,
@@ -25,7 +23,7 @@ const icons = {
 
 const linkCls = "text-mute transition-colors hover:text-ink";
 
-function Header({ dark, toggleTheme, openPalette }) {
+function Header({ openPalette }) {
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
     const on = () => setScrolled(window.scrollY > 8);
@@ -43,7 +41,6 @@ function Header({ dark, toggleTheme, openPalette }) {
           <a href="#projects" onClick={(e) => { e.preventDefault(); scrollToId("projects"); }} className={`hidden sm:inline ${linkCls}`}>Projects</a>
           <a href="#contact" onClick={(e) => { e.preventDefault(); scrollToId("contact"); }} className={`hidden sm:inline ${linkCls}`}>Contact</a>
           <button type="button" onClick={openPalette} aria-label="Open command palette" className="hidden rounded-md border border-line px-2 py-1 text-xs text-mute hover:text-ink sm:inline">Ctrl K</button>
-          <button type="button" onClick={toggleTheme} aria-label={dark ? "Switch to light theme" : "Switch to dark theme"} className={`p-1.5 ${linkCls}`}>{dark ? icons.sun : icons.moon}</button>
           <button type="button" onClick={openPalette} aria-label="Open menu" className={`p-1.5 sm:hidden ${linkCls}`}>{icons.menu}</button>
         </nav>
       </div>
@@ -79,15 +76,7 @@ function Contact() {
 }
 
 export default function App() {
-  const [dark, setDark] = useState(() => document.documentElement.classList.contains("dark"));
   const [paletteOpen, setPaletteOpen] = useState(false);
-
-  const toggleTheme = useCallback(() => {
-    const next = !document.documentElement.classList.contains("dark");
-    document.documentElement.classList.toggle("dark", next);
-    setDark(next);
-    try { localStorage.setItem("theme", next ? "dark" : "light"); } catch { /* ignore */ }
-  }, []);
 
   useEffect(() => {
     const onKey = (e) => {
@@ -102,13 +91,12 @@ export default function App() {
     { label: "Work experience", run: () => scrollToId("work") },
     { label: "Projects", run: () => scrollToId("projects") },
     { label: "Contact", run: () => scrollToId("contact") },
-    { label: "Toggle theme", run: toggleTheme },
     { label: "Download CV", run: () => { const a = document.createElement("a"); a.href = PROFILE.cv; a.download = ""; a.click(); } },
     { label: "GitHub", run: () => window.open(PROFILE.github, "_blank", "noopener") },
     { label: "LinkedIn", run: () => window.open(PROFILE.linkedin, "_blank", "noopener") },
     { label: "Cleared for takeoff", run: toTop },
     { label: "Request clearance", run: () => { scrollToId("contact"); setTimeout(() => document.querySelector("#contact-form input")?.focus({ preventScroll: true }), reduced() ? 0 : 600); } },
-  ], [toggleTheme]);
+  ], []);
 
   const iconLink = "p-1.5 text-mute transition-colors hover:text-ink";
   return (
@@ -118,7 +106,7 @@ export default function App() {
       <Altitude />
       <Palette open={paletteOpen} onClose={() => setPaletteOpen(false)} commands={commands} />
       <div className="relative z-10">
-        <Header dark={dark} toggleTheme={toggleTheme} openPalette={() => setPaletteOpen(true)} />
+        <Header openPalette={() => setPaletteOpen(true)} />
         <main id="top" className="mx-auto max-w-[640px] px-5">
           <section className="pb-16 pt-16 sm:pt-24">
             <h1 className="font-display text-5xl font-semibold tracking-tight sm:text-6xl">{PROFILE.name}</h1>
@@ -169,12 +157,19 @@ export default function App() {
             <div className="space-y-8">
               {PROJECTS.map((p) => (
                 <article key={p.title}>
+                  {p.image && (
+                    <img src={p.image} alt={`${p.title} screenshot`} loading="lazy" width="1000" height="560"
+                      className="mb-4 aspect-[16/9] w-full rounded-xl border border-line object-cover object-top" />
+                  )}
                   <div className="flex items-baseline justify-between gap-4">
                     <h3 className="font-medium">{p.title}</h3>
-                    <a href={p.code} target="_blank" rel="noreferrer" className="text-sm underline underline-offset-4">Code</a>
+                    <span className="flex gap-4 text-sm">
+                      {p.live && <a href={p.live} target="_blank" rel="noreferrer" className="underline underline-offset-4">Live</a>}
+                      <a href={p.code} target="_blank" rel="noreferrer" className="underline underline-offset-4">Code</a>
+                    </span>
                   </div>
                   <p className="mt-1 text-mute">{p.blurb}</p>
-                  <p className="mt-2 text-sm text-accent">{p.flow}</p>
+                  {p.flow && <p className="mt-2 text-sm text-accent">{p.flow}</p>}
                   <div className="mt-3 flex flex-wrap gap-2">{p.tags.map((t) => <span key={t} className="rounded-full border border-line px-2.5 py-0.5 text-xs text-mute">{t}</span>)}</div>
                 </article>
               ))}
