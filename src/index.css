@@ -6,12 +6,12 @@
 
 :root {
   --bg: #fafaf8; --ink: #141414; --mute: #6a6a64; --line: #e6e6e1; --card: #ffffff; --accent: #3b4cca;
-  --bh-w: #8a8a8a;
+  --bh-w: #5b6bd6; --bh-core: #0e1130;
   color-scheme: light;
 }
 .dark {
   --bg: #151412; --ink: #ece8e0; --mute: #9a958b; --line: #2b2925; --card: #1b1a17; --accent: #aab5ff;
-  --bh-w: #ffffff;
+  --bh-w: #ffffff; --bh-core: #000000;
   color-scheme: dark;
 }
 

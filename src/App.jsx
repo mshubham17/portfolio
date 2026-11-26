@@ -147,18 +147,18 @@ export default function App() {
 
           <section id="work" aria-labelledby="work-h" className="scroll-mt-20 py-10">
             <H2 id="work-h">Work experience</H2>
-            <div className="divide-y divide-line border-y border-line">
+            <div className="divide-y divide-line rounded-xl border border-line bg-bg/80 px-4 backdrop-blur-md">
               {EXPERIENCE.map((e) => (
                 <details key={e.company} className="group py-4">
                   <summary className="flex cursor-pointer list-none items-center gap-3 [&::-webkit-details-marker]:hidden">
                     <span className="text-mute transition-transform group-open:rotate-90">{icons.chevron}</span>
                     <span className="min-w-0 flex-1">
                       <span className="block font-medium">{e.company}{e.current && <span className="ml-2 rounded-full border border-line px-2 py-0.5 align-middle text-[10px] font-normal text-mute">Working</span>}</span>
-                      <span className="block text-sm text-mute">{e.role}</span>
+                      <span className="block text-sm text-ink/70">{e.role}</span>
                     </span>
                     <span className="shrink-0 text-xs text-mute">{e.period}</span>
                   </summary>
-                  <ul className="mt-3 list-disc space-y-2 pl-12 text-sm text-mute">{e.points.map((p) => <li key={p}>{p}</li>)}</ul>
+                  <ul className="mt-3 list-disc space-y-2 pl-8 text-sm text-ink/80">{e.points.map((p) => <li key={p}>{p}</li>)}</ul>
                 </details>
               ))}
             </div>

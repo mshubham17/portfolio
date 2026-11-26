@@ -1,11 +1,26 @@
+import { useEffect, useRef } from "react";
+
 export function BlackHole() {
+  const ref = useRef(null);
+  useEffect(() => {
+    let t = false;
+    const on = () => {
+      t = false;
+      const p = Math.min(1, window.scrollY / (window.innerHeight * 0.9));
+      if (ref.current) ref.current.style.opacity = String(1 - 0.7 * p);
+    };
+    const h = () => { if (!t) { t = true; requestAnimationFrame(on); } };
+    on(); window.addEventListener("scroll", h, { passive: true });
+    return () => window.removeEventListener("scroll", h);
+  }, []);
   const disk = "M350 350m-320 0a320 64 0 1 0 640 0a320 64 0 1 0 -640 0M350 350m-118 0a118 23 0 1 0 236 0a118 23 0 1 0 -236 0";
   const w = { fill: "var(--bh-w)" };
   return (
+    <div ref={ref} aria-hidden="true" className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
     <svg
       aria-hidden="true"
       viewBox="0 0 700 700"
-      className="pointer-events-none fixed z-0 -right-[230px] top-[20vh] w-[480px] opacity-45 sm:w-[700px] sm:opacity-60 lg:-top-20 lg:-right-[330px] lg:w-[960px] lg:opacity-65"
+      className="absolute -right-[230px] top-[20vh] w-[480px] opacity-90 dark:opacity-55 sm:w-[700px] sm:dark:opacity-65 lg:-top-20 lg:-right-[330px] lg:w-[960px] lg:dark:opacity-70"
     >
       <defs>
         <filter id="bh-streak" x="-10%" y="-60%" width="120%" height="220%">
@@ -44,7 +59,7 @@ export function BlackHole() {
       </g>
 
       {/* core */}
-      <circle cx="350" cy="350" r="104" fill="#000" opacity=".85" />
+      <circle cx="350" cy="350" r="104" style={{ fill: "var(--bh-core)" }} opacity=".92" />
       <g clipPath="url(#bh-core)" stroke="var(--bh-w)" strokeOpacity=".1" fill="none">
         {[-60, -30, 0, 30, 60].map((d) => (
           <g key={d}>
@@ -65,5 +80,6 @@ export function BlackHole() {
         </g>
       </g>
     </svg>
+    </div>
   );
 }
