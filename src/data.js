@@ -1,13 +1,13 @@
-// All editable content lives here. Search for "TODO" for values you still need to set.
+
 export const PROFILE = {
   name: "Shubham Mehta",
   subtitle: "Full-Stack Developer and IoT enthusiast",
   tagline: "Into web development and IoT. I write code, connect hardware, and Google responsibly.",
   badge: "Available for work",
-  email: "TODO_YOUR_EMAIL@example.com", // TODO: set your real email
+  email: "mehtashubham172@Gmail.com",
   github: "https://github.com/mshubham17",
   linkedin: "https://www.linkedin.com/in/shubham172",
-  cv: "/Shubham_Resume.pdf", // TODO: make sure public/Shubham_Resume.pdf exists
+  cv: "Shubham Resume.pdf",
 };
 
 export const ABOUT = {
@@ -16,7 +16,7 @@ export const ABOUT = {
     "I'm an aspiring Full-Stack Developer and a passionate learner who believes that how we build is just as important as what we build.",
     "Away from the keyboard I enjoy films, reading, and I like exploring history, geopolitics, aviation, astronomy and espionage. I'm naturally curious about how systems work, whether in technology or the real world.",
   ],
-  // One is picked at random on every page load. Add or remove freely.
+  
   quotes: [
     { text: "Hard work beats talent when talent doesn't work hard.", by: "Tim Notke" },
     { text: "Success is nothing more than a few simple disciplines, practiced every day.", by: "Jim Rohn" },
@@ -81,17 +81,18 @@ export const PROJECTS = [
   },
   {
     title: "Personal Portfolio",
-    image: "/projects/portfolio.jpg",
+    image: "/projects/portfolio-v2.jpg",
     blurb: "My developer portfolio built with React and Tailwind.",
     tags: ["React", "JavaScript", "Tailwind CSS"],
     code: "https://github.com/mshubham17/portfolio",
+    live: "https://mshubham.vercel.app",
   },
   {
     title: "Drowning Detection",
     image: "/projects/drowning.jpg",
     blurb: "IoT and computer vision safety system that analyzes swimming videos and generates a risk score.",
     tags: ["Python", "PyTorch", "OpenCV", "Streamlit", "CVLib"],
-    code: "https://github.com/mshubham17/Emotion-detector.git", // TODO: confirm this is the right repo
+    code: "https://github.com/mshubham17/Drowning-Detection", 
     live: "https://drowning-detection-vh9z95a68jhonohxhb59ce.streamlit.app/#try-with-a-demo-video",
   },
   {
