@@ -14,7 +14,7 @@ export const ABOUT = {
   heading: "Figuring it out, one chapter at a time.",
   paragraphs: [
     "I'm an aspiring Full-Stack Developer and a passionate learner who believes that how we build is just as important as what we build.",
-    "Away from the keyboard I enjoy films and reading, and I like exploring history, geopolitics, aviation and architecture. I'm naturally curious about how systems work, whether in technology or the real world.",
+    "Away from the keyboard I enjoy films, reading, and I like exploring history, geopolitics, aviation, astronomy and espionage. I'm naturally curious about how systems work, whether in technology or the real world.",
   ],
   // One is picked at random on every page load. Add or remove freely.
   quotes: [
@@ -30,10 +30,11 @@ export const ABOUT = {
     { text: "It’s not that I’m so smart, it’s just that I stay with problems longer.", by: "Albert Einstein" },
     { text: "Whether you think you can or think you can’t, you’re right.", by: "Henry Ford" },
     { text: "The best way to predict the future is to invent it.", by: "Alan Kay" },
-    { text: "Make it work, make it right, make it fast.", by: "Kent Beck" },
-    { text: "Simplicity is prerequisite for reliability.", by: "Edsger W. Dijkstra" },
-    { text: "Programs must be written for people to read, and only incidentally for machines to execute.", by: "Harold Abelson" },
     { text: "The only way to do great work is to love what you do.", by: "Steve Jobs" },
+    {text: "We are all in the gutter, but some of us are looking at the stars.", by : "Oscar Wilde"},
+    {text : "Well done is better than well said.", by : "Benjamin Franklin"},
+    {text :"You miss 100% of the shots you don't take.", by: "Wayne Gretzky"},
+    {text : "The journey of a thousand miles begins with a single step.", by : "Lao Tzu"}
   ],
   tech: ["React", "Node.js", "MongoDB", "Docker", "Vercel", "Tailwind CSS", "Git", "GitHub"],
 };
