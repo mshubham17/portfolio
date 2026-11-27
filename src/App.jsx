@@ -48,12 +48,36 @@ const H2 = ({ children, id }) => <h2 id={id} className="mb-5 font-display text-2
 
 function Contact() {
   const [status, setStatus] = useState("");
-  const submit = (e) => {
+  const [sending, setSending] = useState(false);
+  const submit = async (e) => {
     e.preventDefault();
-    const f = new FormData(e.currentTarget);
-    const body = `${f.get("message")}\n\n${f.get("name")} (${f.get("email")})`;
-    window.location.href = `mailto:${PROFILE.email}?subject=${encodeURIComponent("Portfolio message from " + f.get("name"))}&body=${encodeURIComponent(body)}`;
-    setStatus("Opening your email app to send the message.");
+    const form = e.currentTarget;
+    const key = import.meta.env.VITE_WEB3FORMS_KEY;
+    if (!key) { setStatus("Contact form isn't configured yet. Please email me directly."); return; }
+    const f = new FormData(form);
+    setSending(true);
+    setStatus("Sending...");
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          access_key: key,
+          subject: `Portfolio message from ${f.get("name")}`,
+          name: f.get("name"),
+          email: f.get("email"),
+          message: f.get("message"),
+        }),
+      });
+      const data = await res.json();
+      if (!data.success) throw new Error(data.message);
+      form.reset();
+      setStatus("Thanks! Your message has been sent.");
+    } catch {
+      setStatus("Something went wrong. Please try again or email me directly.");
+    } finally {
+      setSending(false);
+    }
   };
   const field = "w-full rounded-lg border border-line bg-card px-3 py-2 text-base placeholder:text-mute focus:border-accent";
   return (
@@ -64,7 +88,7 @@ function Contact() {
         <label className="block text-base"><span className="mb-1 block text-mute">Name</span><input name="name" required autoComplete="name" className={field} /></label>
         <label className="block text-base"><span className="mb-1 block text-mute">Email</span><input name="email" type="email" required autoComplete="email" className={field} /></label>
         <label className="block text-base"><span className="mb-1 block text-mute">Message</span><textarea name="message" rows={4} required className={field} /></label>
-        <button type="submit" className="rounded-lg bg-ink px-5 py-2.5 text-base font-medium text-bg hover:opacity-90">Send message</button>
+        <button type="submit" disabled={sending} className="rounded-lg bg-ink px-5 py-2.5 text-base font-medium text-bg hover:opacity-90 disabled:opacity-60">{sending ? "Sending..." : "Send message"}</button>
         <p role="status" aria-live="polite" className="min-h-5 text-base text-mute">{status}</p>
       </form>
     </section>
