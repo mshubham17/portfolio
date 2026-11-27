@@ -4,7 +4,7 @@ export const PROFILE = {
   subtitle: "Full-Stack Developer and IoT enthusiast",
   tagline: "Into web development and IoT. I write code, connect hardware, and Google responsibly.",
   badge: "Available for work",
-  email: "mehtashubham172@Gmail.com",
+  email: "mehtashubham172@gmail.com",
   github: "https://github.com/mshubham17",
   linkedin: "https://www.linkedin.com/in/shubham172",
   cv: "Shubham Resume.pdf",
@@ -16,7 +16,7 @@ export const ABOUT = {
     "I'm an aspiring Full-Stack Developer and a passionate learner who believes that how we build is just as important as what we build.",
     "Away from the keyboard I enjoy films, reading, and I like exploring history, geopolitics, aviation, astronomy and espionage. I'm naturally curious about how systems work, whether in technology or the real world.",
   ],
-  
+
   quotes: [
     { text: "Hard work beats talent when talent doesn't work hard.", by: "Tim Notke" },
     { text: "Success is nothing more than a few simple disciplines, practiced every day.", by: "Jim Rohn" },
